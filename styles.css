@@ -4,7 +4,7 @@
   --bg: #fff7f5;
   --bg-accent: radial-gradient(circle at top, rgba(247, 208, 227, 0.85), transparent 42%),
     linear-gradient(180deg, #fffaf7 0%, #fff2ef 100%);
-  --surface: rgba(255, 252, 250, 0.88);
+  --surface: rgba(255, 252, 250, 0.9);
   --surface-strong: #ffffff;
   --surface-muted: rgba(255, 247, 243, 0.92);
   --text-main: #2f2533;
@@ -102,7 +102,8 @@ button {
 .hero-center,
 .progress-copy,
 .result-actions,
-.section-header {
+.section-header,
+.signature-graph {
   display: flex;
 }
 
@@ -192,7 +193,6 @@ button {
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface-strong);
-  transition: background-color 180ms ease, border-color 180ms ease;
 }
 
 .toggle-thumb {
@@ -364,12 +364,12 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.65rem, 6vw, 2.25rem);
-  line-height: 1.2;
+  font-size: clamp(1.95rem, 6vw, 3rem);
+  line-height: 1.15;
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   line-height: 1.35;
 }
 
@@ -378,16 +378,19 @@ h3 {
 .question-help,
 .question-theme,
 .section-caption,
-.detail-text,
 .revisit-note,
-.load-status {
-  font-size: 1.05rem;
+.load-status,
+.result-strength,
+.result-cache,
+.share-copy {
+  font-size: 1.02rem;
   line-height: 1.65;
   color: var(--text-subtle);
 }
 
 .load-status {
   min-height: 1.65rem;
+  white-space: pre-line;
 }
 
 .meta-list {
@@ -429,8 +432,7 @@ h3 {
   text-decoration: none;
 }
 
-.cta-button,
-.share-button {
+.cta-button {
   display: inline-flex;
   justify-content: center;
   padding: 1rem 1.25rem;
@@ -455,14 +457,14 @@ h3 {
 }
 
 .secondary-button[disabled] {
-  opacity: 0.5;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
 .progress-block,
 .question-card,
 .detail-card,
-.result-card {
+.result-hero {
   display: grid;
   gap: 0.85rem;
 }
@@ -534,67 +536,112 @@ h3 {
 }
 
 .result-code {
-  font-size: clamp(2.5rem, 10vw, 4rem);
-}
-
-.result-strength {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: var(--text-subtle);
+  font-size: clamp(2.7rem, 11vw, 4.2rem);
 }
 
 .result-summary {
-  font-size: 1.18rem;
-  line-height: 1.6;
+  font-size: 1.16rem;
+  line-height: 1.65;
 }
 
-.axis-list {
+.signature-graph {
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.graph-axis {
+  flex: 1;
   display: grid;
-  gap: 1rem;
+  justify-items: center;
+  gap: 0.65rem;
 }
 
-.axis-row {
-  display: grid;
-  gap: 0.5rem;
+.graph-axis-name {
+  font-size: 0.95rem;
+  font-weight: 800;
 }
 
-.axis-head {
+.graph-letters {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--text-subtle);
+}
+
+.graph-rail {
+  position: relative;
+  width: 1rem;
+  height: 9.5rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(239, 125, 163, 0.18), rgba(168, 139, 232, 0.08), rgba(0, 0, 0, 0));
+}
+
+[data-theme="hc"] .graph-rail {
+  background: linear-gradient(180deg, rgba(94, 240, 222, 0.18), rgba(255, 228, 92, 0.08), rgba(255, 255, 255, 0));
+}
+
+.graph-rail::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--border);
+}
+
+.graph-rail::after {
+  content: "";
+  position: absolute;
+  left: -0.65rem;
+  right: -0.65rem;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: rgba(107, 89, 103, 0.24);
+}
+
+[data-theme="hc"] .graph-rail::after {
+  background: rgba(255, 228, 92, 0.45);
+}
+
+.graph-point {
+  position: absolute;
+  left: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  border: 2px solid var(--surface-strong);
+  background: linear-gradient(180deg, var(--pink), var(--yellow));
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
+}
+
+[data-theme="hc"] .graph-point {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(94, 240, 222, 0.2);
+}
+
+.graph-raw {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-subtle);
+}
+
+.result-prose {
+  display: grid;
   gap: 1rem;
 }
 
-.axis-name,
-.axis-value {
-  font-size: 1rem;
+.result-prose p {
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+.share-copy {
   font-weight: 700;
-}
-
-.axis-track {
-  display: flex;
-  width: 100%;
-  height: 0.95rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
-}
-
-.axis-bar {
-  height: 100%;
-  border-radius: 999px 0 0 999px;
-  background: linear-gradient(90deg, var(--lavender), var(--pink), var(--yellow));
-}
-
-[data-theme="hc"] .axis-bar {
-  background: linear-gradient(90deg, var(--pink), var(--yellow));
-}
-
-.axis-split {
-  height: 100%;
-  background: transparent;
-  border-left: 1px solid var(--border);
 }
 
 .section-header {
@@ -635,5 +682,5 @@ button:focus-visible {
   }
 }
 
-/* Extension point: add question screen shell styles below. */
-/* Extension point: add result summary card styles below. */
+/* Extension point: split question page into a dedicated route. */
+/* Extension point: replace result prose with server-rendered long-form interpretation. */
