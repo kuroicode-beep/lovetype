@@ -1,22 +1,22 @@
-{
-  "version": "1.0.0",
+﻿{
+  "version": "1.0.1",
   "default": "{mbti} LoveType 결과: {summary}",
   "templates": {
-    "ISTJ": "{mbti} LoveType, 신뢰와 일관성으로 사랑을 쌓는 타입",
-    "ISFJ": "{mbti} LoveType, 배려와 안정감으로 마음을 지키는 타입",
-    "INFJ": "{mbti} LoveType, 깊은 의미와 진정성을 찾는 타입",
-    "INTJ": "{mbti} LoveType, 선택하면 오래 가는 전략형 타입",
-    "ISTP": "{mbti} LoveType, 담백하지만 분명한 실전형 타입",
-    "ISFP": "{mbti} LoveType, 편안한 온도로 사랑을 표현하는 타입",
+    "ISTJ": "{mbti} LoveType, 차분함 속에서 신뢰를 쌓아가는 안정형 타입",
+    "ISFJ": "{mbti} LoveType, 따뜻한 배려로 마음을 지켜주는 보호형 타입",
+    "INFJ": "{mbti} LoveType, 조용한 깊이와 진정성을 품은 통찰형 타입",
+    "INTJ": "{mbti} LoveType, 선택하면 오래 가는 신중한 전략형 타입",
+    "ISTP": "{mbti} LoveType, 담백하지만 필요할 때는 확실한 실전형 타입",
+    "ISFP": "{mbti} LoveType, 부드러운 감수성과 편안함을 사랑하는 감각형 타입",
     "INFP": "{mbti} LoveType, 이상과 진심을 함께 품는 로맨틱 타입",
-    "INTP": "{mbti} LoveType, 생각의 합과 자유를 중시하는 타입",
-    "ESTP": "{mbti} LoveType, 에너지로 관계를 움직이는 행동형 타입",
-    "ESFP": "{mbti} LoveType, 즐거움과 표현력이 풍부한 타입",
-    "ENFP": "{mbti} LoveType, 설렘과 진심을 동시에 확장하는 타입",
-    "ENTP": "{mbti} LoveType, 재치와 호기심으로 사랑을 만드는 타입",
-    "ESTJ": "{mbti} LoveType, 기준과 실행력으로 관계를 안정시키는 타입",
-    "ESFJ": "{mbti} LoveType, 돌봄과 애정 표현으로 관계를 살리는 타입",
-    "ENFJ": "{mbti} LoveType, 마음과 방향을 함께 이끄는 타입",
-    "ENTJ": "{mbti} LoveType, 사랑도 설계하는 주도형 타입"
+    "INTP": "{mbti} LoveType, 생각의 합과 자유를 중시하는 탐구형 타입",
+    "ESTP": "{mbti} LoveType, 현장감과 에너지로 관계를 움직이는 액션형 타입",
+    "ESFP": "{mbti} LoveType, 감정 표현과 생동감이 풍부한 즐거움형 타입",
+    "ENFP": "{mbti} LoveType, 설렘과 진심을 동시에 확장하는 영감형 타입",
+    "ENTP": "{mbti} LoveType, 재치와 호기심으로 사랑을 흥미롭게 만드는 발상형 타입",
+    "ESTJ": "{mbti} LoveType, 기준과 실행력으로 관계를 안정시키는 운영형 타입",
+    "ESFJ": "{mbti} LoveType, 돌봄과 선명한 애정 표현으로 관계를 살리는 교감형 타입",
+    "ENFJ": "{mbti} LoveType, 마음과 방향을 함께 이끄는 관계 중심형 타입",
+    "ENTJ": "{mbti} LoveType, 분명한 의지와 추진력으로 사랑도 설계하는 주도형 타입"
   }
 }
