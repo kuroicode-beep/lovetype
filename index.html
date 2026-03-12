@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveType | MBTI 연애유형 테스트</title>
+  <meta
+    name="description"
+    content="20개의 질문으로 알아보는 나의 연애 성향과 관계 스타일, LoveType MBTI 연애유형 테스트"
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
+  <div class="page-shell">
+    <header class="site-header" aria-label="LoveType 헤더">
+      <a class="brand" href="./index.html" aria-label="LoveType 홈">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">LoveType</span>
+      </a>
+
+      <div class="theme-toggle-wrap">
+        <span class="toggle-label" id="theme-label">고대비 모드</span>
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          type="button"
+          role="switch"
+          aria-checked="false"
+          aria-labelledby="theme-label"
+        >
+          <span class="toggle-track" aria-hidden="true">
+            <span class="toggle-thumb"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+      <section class="panel hero-panel" id="landing-screen" aria-labelledby="hero-title">
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit orbit-a"></div>
+          <div class="hero-orbit orbit-b"></div>
+          <div class="hero-center">
+            <span class="heart-left"></span>
+            <span class="heart-right"></span>
+            <span class="spark spark-top"></span>
+            <span class="spark spark-bottom"></span>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <p class="eyebrow">MBTI Love Match Insight</p>
+          <h1 id="hero-title">MBTI로 보는 당신의 연애유형은?</h1>
+          <p class="hero-description">
+            20개의 질문으로 알아보는
+            <br>
+            나의 연애 성향과 관계 스타일
+          </p>
+        </div>
+
+        <ul class="meta-list" aria-label="테스트 정보">
+          <li>20문항</li>
+          <li>2~3분</li>
+          <li>결과 공유 가능</li>
+        </ul>
+
+        <div class="hero-actions">
+          <button class="cta-button" id="start-test-button" type="button">테스트 시작하기</button>
+        </div>
+
+        <p class="load-status" id="load-status" role="status" aria-live="polite"></p>
+
+        <p class="support-note">
+          가볍게 시작하고, 관계를 더 잘 이해하는 첫 화면입니다.
+        </p>
+      </section>
+
+      <section class="panel question-panel" id="question-screen" aria-labelledby="question-title" hidden>
+        <div class="progress-block" aria-label="테스트 진행 상태">
+          <div class="progress-copy">
+            <p class="eyebrow">Question Flow</p>
+            <p class="progress-label" id="progress-label">1 / 20</p>
+          </div>
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <article class="question-card">
+          <p class="question-kicker" id="question-dimension">EI 축</p>
+          <p class="question-theme" id="question-theme">연결 방식</p>
+          <h2 id="question-title">질문이 여기에 표시됩니다.</h2>
+          <p class="question-help">
+            지금 더 가까운 쪽을 골라주세요. 정답은 없고, 현재의 나와 더 닮은 선택이면 충분해요.
+          </p>
+        </article>
+
+        <div class="choice-list" id="choice-list" role="group" aria-labelledby="question-title">
+          <button class="choice-card" type="button" data-choice-index="0">
+            첫 번째 선택지
+          </button>
+          <button class="choice-card" type="button" data-choice-index="1">
+            두 번째 선택지
+          </button>
+        </div>
+      </section>
+
+      <section class="panel result-panel" id="result-screen" aria-labelledby="result-title" hidden>
+        <div class="result-topline">
+          <p class="eyebrow">Today’s LoveType</p>
+          <p class="revisit-note" id="revisit-note" hidden>
+            오늘의 테스트는 이미 완료했어요<br>
+            다시 테스트는 1일 1회만 가능합니다
+          </p>
+        </div>
+
+        <div class="result-card capture-card">
+          <p class="result-label">MBTI 결과</p>
+          <h2 id="result-title" class="result-code">ENFP</h2>
+          <p class="result-strength" id="result-strength">
+            외향-중 / 직관-강 / 감정-중 / 인식-약
+          </p>
+          <p class="result-summary" id="result-summary">
+            관계의 설렘을 잘 살리면서도, 상대의 감정을 빠르게 읽어내는 타입이에요.
+          </p>
+        </div>
+
+        <section class="detail-card" aria-labelledby="axis-title">
+          <div class="section-header">
+            <h3 id="axis-title">4축 강도</h3>
+            <p class="section-caption">현재 응답 기준의 성향 강도예요</p>
+          </div>
+          <div class="axis-list" id="axis-list"></div>
+        </section>
+
+        <section class="detail-card" aria-labelledby="style-title">
+          <div class="section-header">
+            <h3 id="style-title">연애 스타일</h3>
+          </div>
+          <p class="detail-text" id="style-text"></p>
+        </section>
+
+        <section class="detail-card" aria-labelledby="strength-title">
+          <div class="section-header">
+            <h3 id="strength-title">강점</h3>
+          </div>
+          <p class="detail-text" id="strength-text"></p>
+        </section>
+
+        <section class="detail-card" aria-labelledby="caution-title">
+          <div class="section-header">
+            <h3 id="caution-title">조심할 포인트</h3>
+          </div>
+          <p class="detail-text" id="caution-text"></p>
+        </section>
+
+        <div class="result-actions">
+          <button class="cta-button share-button" id="share-button" type="button">공유하기</button>
+          <button class="secondary-button" id="retry-button" type="button">다시 테스트하기</button>
+          <a class="download-link" href="#download">LoveType 다운로드</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
