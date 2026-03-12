@@ -11,14 +11,28 @@
   var STORAGE_SUMMARY_KEY = "result_summary";
   var STORAGE_DETAIL_KEY = "result_detail";
   var STORAGE_NEXT_AVAILABLE_KEY = "next_available_at";
+  var APP_VERSION = "1.2.1";
 
   var HIGH_CONTRAST = "hc";
   var DEFAULT_THEME = "default";
   var API_ENDPOINT = "/api/mbti-test/result";
+  var AXIS_SEQUENCE = ["EI", "SN", "TF", "JP"];
+  var GRAPH_LABELS = {
+    EI: "관계 에너지",
+    SN: "인식 결",
+    TF: "감정 판단",
+    JP: "관계 리듬"
+  };
+  var GRAPH_STATE_LABELS = {
+    strongPositive: "선명",
+    weakPositive: "기울어짐",
+    weakNegative: "잔잔",
+    strongNegative: "깊음"
+  };
   var POSITIVE_VALUES = {
-    strong_4_1: 70,
+    strong_4_1: 72,
     strong_5_0: 100,
-    weak: 35
+    weak: 38
   };
   var POSITIVE_LETTER_BY_AXIS = {
     EI: "E",
@@ -38,6 +52,7 @@
     baseResults: null,
     axisModifiers: null,
     shareCopy: null,
+    renderedQuestions: [],
     currentQuestionIndex: 0,
     answers: [],
     apiMode: "uninitialized",
@@ -65,13 +80,14 @@
     resultStrength: document.getElementById("result-strength"),
     resultSummary: document.getElementById("result-summary"),
     resultCacheKey: document.getElementById("result-cache-key"),
-    signatureGraph: document.getElementById("signature-graph"),
+    lineGraph: document.getElementById("line-graph"),
     analysisParagraph: document.getElementById("analysis-paragraph"),
     exampleParagraph: document.getElementById("example-paragraph"),
     closingParagraph: document.getElementById("closing-paragraph"),
     shareCopy: document.getElementById("share-copy"),
     shareButton: document.getElementById("share-button"),
-    retryButton: document.getElementById("retry-button"),
+    revisitLink: document.getElementById("revisit-link"),
+    storyLink: document.getElementById("story-link"),
     revisitNote: document.getElementById("revisit-note")
   };
 
@@ -145,12 +161,8 @@
   }
 
   function fetchJsonOrThrow(path) {
-    console.log("[LoveType] fetch start:", path, "protocol:", window.location.protocol);
-
     return fetch(path, { cache: "no-store" })
       .then(function (response) {
-        console.log("[LoveType] fetch status:", path, response.status);
-
         if (!response.ok) {
           throw new Error(path + " -> HTTP " + response.status);
         }
@@ -172,28 +184,22 @@
     var loaded = {};
     var failedFiles = [];
 
-    console.log("[LoveType] protocol:", window.location.protocol);
-
     return files.reduce(function (promise, file) {
       return promise.then(function () {
-        return fetchJsonOrThrow("./" + file)
+        return fetchJsonOrThrow("./" + file + "?v=" + APP_VERSION)
           .then(function (data) {
             loaded[file] = data;
-            console.log("[LoveType][OK]", file);
           })
-          .catch(function (error) {
-            console.error("[LoveType][FAIL]", file, error.message);
+          .catch(function () {
             failedFiles.push(file);
           });
       });
     }, Promise.resolve()).then(function () {
-      console.log("[LoveType] failed files:", failedFiles);
-
       if (failedFiles.length > 0) {
         var isFileProtocol = window.location.protocol === "file:";
         var extraMessage = isFileProtocol
-          ? "브라우저에서 파일을 직접 열면(file://) JSON 로딩이 차단될 수 있어요. 로컬 서버 또는 배포 주소에서 열어야 해요."
-          : "배포 경로 또는 파일 경로를 확인해야 해요.";
+          ? "브라우저에서 file:// 경로로 열면 JSON 로딩이 차단될 수 있어요. 로컬 서버나 배포 주소에서 실행해 주세요."
+          : "배포 경로 또는 파일 위치를 확인해 주세요.";
 
         showFatalMessage(
           "필수 데이터 파일을 불러오지 못했어요.\n"
@@ -219,6 +225,74 @@
     state.currentQuestionIndex = 0;
     state.answers = [];
     state.resultPayload = null;
+    state.renderedQuestions = [];
+  }
+
+  function randomizeArray(items) {
+    var copy = items.slice();
+    for (var i = copy.length - 1; i > 0; i -= 1) {
+      var randomIndex = Math.floor(Math.random() * (i + 1));
+      var temp = copy[i];
+      copy[i] = copy[randomIndex];
+      copy[randomIndex] = temp;
+    }
+    return copy;
+  }
+
+  function normalizeQuestion(question) {
+    return {
+      questionId: question.questionId,
+      axis: question.axis,
+      theme: question.theme,
+      prompt: question.prompt,
+      options: randomizeArray(question.options)
+    };
+  }
+
+  function chooseNextAxis(queues, previousAxes) {
+    var availableAxes = AXIS_SEQUENCE.filter(function (axis) {
+      return queues[axis].length > 0;
+    });
+
+    var filteredAxes = availableAxes.filter(function (axis) {
+      return previousAxes.indexOf(axis) === -1;
+    });
+    var candidateAxes = filteredAxes.length > 0 ? filteredAxes : availableAxes;
+    var maxRemaining = Math.max.apply(null, candidateAxes.map(function (axis) {
+      return queues[axis].length;
+    }));
+    var strongestAxes = candidateAxes.filter(function (axis) {
+      return queues[axis].length === maxRemaining;
+    });
+
+    return strongestAxes[Math.floor(Math.random() * strongestAxes.length)];
+  }
+
+  function buildShuffledQuestions(questions) {
+    var queues = {
+      EI: [],
+      SN: [],
+      TF: [],
+      JP: []
+    };
+    var ordered = [];
+    var previousAxes = [];
+
+    questions.forEach(function (question) {
+      queues[question.axis].push(normalizeQuestion(question));
+    });
+
+    Object.keys(queues).forEach(function (axis) {
+      queues[axis] = randomizeArray(queues[axis]);
+    });
+
+    while (ordered.length < questions.length) {
+      var nextAxis = chooseNextAxis(queues, previousAxes.slice(-1));
+      ordered.push(queues[nextAxis].shift());
+      previousAxes.push(nextAxis);
+    }
+
+    return ordered;
   }
 
   function startTest() {
@@ -228,49 +302,46 @@
     }
 
     resetTestState();
-    setLoadStatus("");
+    state.renderedQuestions = buildShuffledQuestions(state.questionsData.questions);
+    hideFatalMessage();
     showScreen("question");
     renderQuestion();
   }
 
   function renderQuestion() {
-    var question = state.questionsData.questions[state.currentQuestionIndex];
+    var question = state.renderedQuestions[state.currentQuestionIndex];
     var questionNumber = state.currentQuestionIndex + 1;
     var progressPercent = (questionNumber / state.questionsData.totalQuestions) * 100;
+    var dimensionLabel = state.questionsData.dimensions[question.axis] || question.axis;
 
     elements.progressLabel.textContent = questionNumber + " / " + state.questionsData.totalQuestions;
     elements.progressFill.style.width = progressPercent + "%";
-    elements.questionDimension.textContent = question.dimension + " 축";
+    elements.questionDimension.textContent = question.axis + " · " + dimensionLabel;
     elements.questionTheme.textContent = question.theme;
-    elements.questionTitle.textContent = question.question;
+    elements.questionTitle.textContent = question.prompt;
 
     elements.choiceButtons.forEach(function (button, index) {
-      button.textContent = question.options[index].text;
-      button.setAttribute("aria-label", question.options[index].text);
+      var option = question.options[index];
+      button.textContent = option.label;
+      button.setAttribute("aria-label", option.label);
+      button.dataset.choiceId = option.id;
+      button.dataset.choiceIndex = String(index);
     });
 
     elements.choiceButtons[0].focus();
   }
 
-  function extractChoiceLetter(scoreObject) {
-    return Object.keys(scoreObject)[0];
-  }
-
-  function buildAnswerRecord(question, option) {
-    return {
-      questionId: question.id,
-      axis: question.dimension,
-      choice: extractChoiceLetter(option.score)
-    };
-  }
-
   function handleChoice(index) {
-    var question = state.questionsData.questions[state.currentQuestionIndex];
+    var question = state.renderedQuestions[state.currentQuestionIndex];
     var option = question.options[index];
 
-    state.answers.push(buildAnswerRecord(question, option));
+    state.answers.push({
+      questionId: question.questionId,
+      axis: option.axis,
+      choice: option.value
+    });
 
-    if (state.currentQuestionIndex === state.questionsData.questions.length - 1) {
+    if (state.currentQuestionIndex === state.renderedQuestions.length - 1) {
       finalizeTest();
       return;
     }
@@ -305,7 +376,7 @@
     return {
       winner: winner,
       level: winnerScore >= 4 ? "strong" : "weak",
-      raw: winner + winnerScore + ":" + loser + loserScore
+      raw: winner + " " + winnerScore + ":" + loserScore + " " + loser
     };
   }
 
@@ -341,27 +412,56 @@
     });
   }
 
+  function sanitizeResultField(value, fallback) {
+    if (!value || /\?/.test(value)) {
+      return fallback;
+    }
+
+    return value;
+  }
+
   function composeResultText(mbti, axisStrength) {
-    var base = state.baseResults.results[mbti];
-    var modifiers = state.axisModifiers.modifiers;
+    var base = state.baseResults && state.baseResults.results
+      ? state.baseResults.results[mbti]
+      : null;
+    var modifiers = state.axisModifiers && state.axisModifiers.modifiers
+      ? state.axisModifiers.modifiers
+      : null;
     var modifierKeys = {
       EI: axisStrength.EI.winner + "_" + axisStrength.EI.level,
       SN: axisStrength.SN.winner + "_" + axisStrength.SN.level,
       TF: axisStrength.TF.winner + "_" + axisStrength.TF.level,
       JP: axisStrength.JP.winner + "_" + axisStrength.JP.level
     };
-    var summary = base.summary + ". " + modifiers.EI[modifierKeys.EI];
-    var analysisParagraph = [base.base_description, modifiers.EI[modifierKeys.EI], modifiers.SN[modifierKeys.SN]].join(" ");
-    var exampleParagraph = [base.relationship_example, modifiers.TF[modifierKeys.TF], modifiers.JP[modifierKeys.JP]].join(" ");
-    var closingParagraph = [base.closing_guidance, "LoveType 기준 이 조합은 " + modifierKeys.EI + ", " + modifierKeys.SN + ", " + modifierKeys.TF + ", " + modifierKeys.JP + "의 결을 가집니다."].join(" ");
-    var template = state.shareCopy.templates[mbti] || state.shareCopy.default;
+    var shareTemplate = state.shareCopy && state.shareCopy.templates
+      ? (state.shareCopy.templates[mbti] || state.shareCopy.default || "{mbti} {summary}")
+      : "{mbti} {summary}";
+
+    if (!base || !modifiers) {
+      return {
+        summary: mbti + " 타입의 연애 흐름을 분석했어요.",
+        analysis_paragraph: "관계가 시작될 때의 에너지와 상대를 읽는 결, 감정을 다루는 방식, 관계의 리듬을 함께 살펴본 결과예요.",
+        example_paragraph: "강약 판정은 각 축의 5:0, 4:1을 strong, 3:2를 weak로 유지해 현재의 연애 결을 더 또렷하게 보여줘요.",
+        closing_paragraph: "오늘의 LoveType 결과를 바탕으로 당신이 사람과 가까워지는 방식과 안정감을 느끼는 흐름을 읽어냈어요.",
+        share_text: replacePlaceholders(shareTemplate, { mbti: mbti, summary: mbti + " 타입의 연애 흐름" })
+      };
+    }
+
+    var summary = sanitizeResultField(base.summary, mbti + " 타입의 연애 흐름을 분석했어요.");
+    var baseDescription = sanitizeResultField(base.base_description, "관계가 시작되고 깊어지는 방식에서 드러나는 기본 결을 읽어냈어요.");
+    var relationshipExample = sanitizeResultField(base.relationship_example, "상대와 가까워질 때 어떤 장면에서 마음이 움직이는지 함께 살펴봤어요.");
+    var closingGuidance = sanitizeResultField(base.closing_guidance, "지금의 결과는 오늘 당신의 연애 리듬을 보여주는 한 장면이에요.");
+    var eiModifier = sanitizeResultField(modifiers.EI[modifierKeys.EI], "");
+    var snModifier = sanitizeResultField(modifiers.SN[modifierKeys.SN], "");
+    var tfModifier = sanitizeResultField(modifiers.TF[modifierKeys.TF], "");
+    var jpModifier = sanitizeResultField(modifiers.JP[modifierKeys.JP], "");
 
     return {
       summary: summary,
-      analysis_paragraph: analysisParagraph,
-      example_paragraph: exampleParagraph,
-      closing_paragraph: closingParagraph,
-      share_text: replacePlaceholders(template, { mbti: mbti, summary: base.summary })
+      analysis_paragraph: [baseDescription, eiModifier, snModifier].join(" ").trim(),
+      example_paragraph: [relationshipExample, tfModifier, jpModifier].join(" ").trim(),
+      closing_paragraph: [closingGuidance, "LoveType 강약 판정은 " + modifierKeys.EI + ", " + modifierKeys.SN + ", " + modifierKeys.TF + ", " + modifierKeys.JP + " 조합으로 계산했어요."].join(" "),
+      share_text: replacePlaceholders(shareTemplate, { mbti: mbti, summary: summary })
     };
   }
 
@@ -392,7 +492,7 @@
       axis_strength: axisStrength,
       graph_values: graphValues,
       cache_key: buildCacheKey(mbti, axisStrength),
-      result_version: "1.0.0",
+      result_version: APP_VERSION,
       result: composeResultText(mbti, axisStrength)
     };
   }
@@ -449,8 +549,9 @@
     var completedDate = window.localStorage.getItem(STORAGE_COMPLETED_DATE_KEY);
     var today = getKstDateInfo(new Date()).dateString;
     var payloadText = window.localStorage.getItem(STORAGE_RESULT_PAYLOAD_KEY);
+    var storedVersion = window.localStorage.getItem(STORAGE_VERSION_KEY);
 
-    if (completedDate !== today || !payloadText) {
+    if (completedDate !== today || !payloadText || storedVersion !== APP_VERSION) {
       return null;
     }
 
@@ -458,36 +559,114 @@
   }
 
   function buildStrengthDisplay(axisStrength) {
-    return ["EI", "SN", "TF", "JP"].map(function (axisName) {
-      return axisStrength[axisName].winner + " " + axisStrength[axisName].level;
+    return AXIS_SEQUENCE.map(function (axisName) {
+      var winner = axisStrength[axisName].winner;
+      var label = AXIS_META[axisName].labels[winner];
+      return GRAPH_LABELS[axisName] + " " + winner + " " + axisStrength[axisName].level + " (" + label + ")";
     }).join(" / ");
   }
 
-  function buildGraphAxis(axisName, payload) {
-    var graphAxis = document.createElement("div");
-    graphAxis.className = "graph-axis";
+  function getGraphPointState(value) {
+    if (value >= POSITIVE_VALUES.strong_4_1) {
+      return GRAPH_STATE_LABELS.strongPositive;
+    }
+    if (value > 0) {
+      return GRAPH_STATE_LABELS.weakPositive;
+    }
+    if (value <= -POSITIVE_VALUES.strong_4_1) {
+      return GRAPH_STATE_LABELS.strongNegative;
+    }
 
-    var axisMeta = AXIS_META[axisName];
-    var positiveLetter = POSITIVE_LETTER_BY_AXIS[axisName];
-    var negativeLetter = axisMeta.letters[0] === positiveLetter ? axisMeta.letters[1] : axisMeta.letters[0];
-    var value = payload.graph_values[axisName];
-    var pointPosition = 50 - (value / 2);
-
-    graphAxis.innerHTML = [
-      '<span class="graph-axis-name">' + axisName + "</span>",
-      '<div class="graph-letters"><span>' + axisMeta.labels[positiveLetter] + "</span><span>" + axisMeta.labels[negativeLetter] + "</span></div>",
-      '<div class="graph-rail" role="img" aria-label="' + axisName + " 값 " + value + '"><span class="graph-point" style="top:' + pointPosition + '%;"></span></div>',
-      '<span class="graph-raw">' + payload.axis_strength[axisName].raw + "</span>"
-    ].join("");
-
-    return graphAxis;
+    return GRAPH_STATE_LABELS.weakNegative;
   }
 
-  function renderSignatureGraph(payload) {
-    elements.signatureGraph.innerHTML = "";
-    ["EI", "SN", "TF", "JP"].forEach(function (axisName) {
-      elements.signatureGraph.appendChild(buildGraphAxis(axisName, payload));
+  function mapGraphPoint(axisName, value, index, total) {
+    var width = 760;
+    var height = 420;
+    var paddingLeft = 96;
+    var paddingRight = 36;
+    var paddingTop = 42;
+    var paddingBottom = 96;
+    var plotWidth = width - paddingLeft - paddingRight;
+    var plotHeight = height - paddingTop - paddingBottom;
+    var centerY = paddingTop + plotHeight / 2;
+    var x = paddingLeft + (plotWidth / (total - 1)) * index;
+    var y = centerY - ((value / 100) * (plotHeight / 2));
+
+    return {
+      x: x,
+      y: y,
+      axis: axisName,
+      value: value
+    };
+  }
+
+  function buildGraphStatusLabel(axisName, payload) {
+    var axisStrength = payload.axis_strength[axisName];
+    var label = AXIS_META[axisName].labels[axisStrength.winner];
+    return axisStrength.winner + " · " + label + " · " + axisStrength.level;
+  }
+
+  function renderLineGraph(payload) {
+    var width = 760;
+    var height = 420;
+    var yGuides = [100, 50, 0, -50, -100];
+    var guideLabels = {
+      100: "Strong +",
+      50: "Weak +",
+      0: "균형",
+      "-50": "Weak -",
+      "-100": "Strong -"
+    };
+    var points = AXIS_SEQUENCE.map(function (axisName, index) {
+      return mapGraphPoint(axisName, payload.graph_values[axisName], index, AXIS_SEQUENCE.length);
     });
+    var polylinePoints = points.map(function (point) {
+      return point.x + "," + point.y;
+    }).join(" ");
+    var svgParts = [
+      '<svg class="graph-svg" viewBox="0 0 ' + width + " " + height + '" aria-hidden="true">'
+    ];
+
+    yGuides.forEach(function (guide) {
+      var guidePoint = mapGraphPoint("guide", guide, 0, AXIS_SEQUENCE.length);
+      var lineClass = guide === 0 ? "graph-mid-line" : "graph-guide-line";
+      svgParts.push('<line class="' + lineClass + '" x1="96" y1="' + guidePoint.y + '" x2="724" y2="' + guidePoint.y + '"></line>');
+      svgParts.push('<text class="graph-guide-label" x="22" y="' + (guidePoint.y + 5) + '">' + guideLabels[String(guide)] + "</text>");
+    });
+
+    points.forEach(function (point) {
+      svgParts.push('<line class="graph-axis-line" x1="' + point.x + '" y1="42" x2="' + point.x + '" y2="324"></line>');
+    });
+
+    svgParts.push('<polyline class="graph-polyline" points="' + polylinePoints + '"></polyline>');
+
+    points.forEach(function (point) {
+      var pointClass = point.value >= 0 ? "graph-point graph-point-positive" : "graph-point graph-point-negative";
+      var bubbleY = point.y <= 76 ? point.y + 34 : point.y - 26;
+      svgParts.push('<circle class="' + pointClass + '" cx="' + point.x + '" cy="' + point.y + '" r="11"></circle>');
+      svgParts.push('<text class="graph-point-value" x="' + point.x + '" y="' + bubbleY + '">' + buildGraphStatusLabel(point.axis, payload) + "</text>");
+    });
+
+    AXIS_SEQUENCE.forEach(function (axisName, index) {
+      var xPoint = mapGraphPoint(axisName, 0, index, AXIS_SEQUENCE.length).x;
+      svgParts.push('<text class="graph-axis-label" x="' + xPoint + '" y="360">' + axisName + "</text>");
+      svgParts.push('<text class="graph-axis-caption" x="' + xPoint + '" y="387">' + GRAPH_LABELS[axisName] + "</text>");
+      svgParts.push('<text class="graph-axis-raw" x="' + xPoint + '" y="409">' + payload.axis_strength[axisName].raw + "</text>");
+    });
+
+    svgParts.push("</svg>");
+
+    elements.lineGraph.innerHTML = [
+      '<div class="graph-intro">',
+      '<p class="graph-headline">네 축의 방향과 강도가 하나의 흐름으로 이어집니다.</p>',
+      '<p class="graph-copy">양수는 ' + AXIS_META.EI.labels.E + "/" + AXIS_META.SN.labels.S + "/" + AXIS_META.TF.labels.T + "/" + AXIS_META.JP.labels.J + ' 쪽, 음수는 반대 축을 뜻해요.</p>',
+      "</div>",
+      '<div class="graph-shell">' + svgParts.join("") + "</div>",
+      '<div class="graph-status-row">' + AXIS_SEQUENCE.map(function (axisName) {
+        return '<div class="graph-status-card"><strong>' + axisName + '</strong><span>' + buildGraphStatusLabel(axisName, payload) + '</span><em>' + getGraphPointState(payload.graph_values[axisName]) + "</em></div>";
+      }).join("") + "</div>"
+    ].join("");
   }
 
   function renderResult(payload, isLocked) {
@@ -502,8 +681,9 @@
     elements.closingParagraph.textContent = payload.result.closing_paragraph;
     elements.shareCopy.textContent = payload.result.share_text;
     elements.revisitNote.hidden = !isLocked;
-    elements.retryButton.disabled = isLocked;
-    renderSignatureGraph(payload);
+    elements.revisitLink.setAttribute("href", "#result-screen");
+    elements.storyLink.setAttribute("href", "#stories");
+    renderLineGraph(payload);
   }
 
   function finalizeTest() {
@@ -512,11 +692,11 @@
     requestResultFromApi(buildResultRequest())
       .then(function (payload) {
         saveResultPayload(payload);
-        setLoadStatus("");
+        hideFatalMessage();
         renderResult(payload, true);
       })
       .catch(function () {
-        setLoadStatus("결과를 생성하지 못했어요. 잠시 후 다시 시도해주세요.");
+        showFatalMessage("결과를 생성하지 못했어요. 잠시 뒤 다시 시도해 주세요.");
         showScreen("landing");
       });
   }
@@ -587,12 +767,12 @@
     var isFileProtocol = window.location.protocol === "file:";
 
     setStartButtonDisabled(true);
-    setLoadStatus("LoveType 정식 데이터와 해석 구조를 불러오는 중이에요.");
+    setLoadStatus("LoveType 질문과 결과 구조를 불러오는 중이에요.");
 
     if (isFileProtocol) {
       showFatalMessage(
-        "브라우저에서 파일을 직접 열면(file://) 데이터 로딩이 차단될 수 있어요.\n"
-        + "로컬 서버 또는 배포 주소에서 열어야 정상 동작해요."
+        "브라우저에서 file:// 경로로 열면 데이터 로딩이 차단될 수 있어요.\n"
+        + "로컬 서버나 배포 주소에서 실행해 주세요."
       );
     }
 
@@ -613,7 +793,4 @@
   initializeTheme();
   initializeEvents();
   initializeApp();
-
-  // Extension point: replace local fallback with server-only mode after API rollout.
-  // Extension point: move result payload caching to a dedicated storage module.
 })();

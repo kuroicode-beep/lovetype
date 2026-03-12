@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LoveType | MBTI 연애유형 테스트</title>
+  <title>LoveType | 연애 결을 읽는 4지선다 테스트</title>
   <meta
     name="description"
-    content="20문항 4축 기반으로 LoveType 연애유형을 분석하는 MBTI 확장형 테스트"
+    content="20문항 4축 기반 4지선다로 관계 에너지, 인식 결, 감정 판단, 관계 리듬을 읽어내는 LoveType 테스트."
   >
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=1.2.1">
 </head>
 <body>
   <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
@@ -52,18 +52,19 @@
 
         <div class="hero-copy">
           <p class="eyebrow">LoveType Signature Test</p>
-          <h1 id="hero-title">MBTI로 보는 당신의 연애유형은?</h1>
+          <h1 id="hero-title">답이 읽히지 않게, 내 연애 결만 남기다</h1>
           <p class="hero-description">
-            20문항, 4축, 256가지 해석 패턴으로
+            20문항, 4지선다, 4축 강약 판정으로
             <br>
-            관계 안의 결을 더 세밀하게 읽어내는 LoveType
+            관계가 시작되고 깊어지는 당신의 흐름을 읽어냅니다.
           </p>
         </div>
 
         <ul class="meta-list" aria-label="테스트 정보">
           <li id="meta-question-count">20문항</li>
-          <li>2~3분</li>
-          <li>축별 강약 해석</li>
+          <li>4지선다</li>
+          <li>축 분산 셔플</li>
+          <li>수평 꺾은선 결과</li>
         </ul>
 
         <div class="hero-actions">
@@ -82,7 +83,7 @@
         <p class="load-status" id="load-status" role="status" aria-live="polite"></p>
 
         <p class="support-note">
-          기본 MBTI 위에 LoveType 축 보정이 더해지는 정식 해석 버전입니다.
+          보기 위치와 문항 축은 한눈에 읽히지 않도록 섞여 있으며, 강약 판정은 5:0, 4:1은 strong, 3:2는 weak로 계산됩니다.
         </p>
       </section>
 
@@ -98,17 +99,19 @@
         </div>
 
         <article class="question-card">
-          <p class="question-kicker" id="question-dimension">EI 축</p>
-          <p class="question-theme" id="question-theme">첫만남 이후</p>
-          <h2 id="question-title">질문이 여기에 표시됩니다.</h2>
+          <p class="question-kicker" id="question-dimension">EI · 관계 에너지</p>
+          <p class="question-theme" id="question-theme">첫 흐름</p>
+          <h2 id="question-title">지금 문항이 여기에 표시됩니다.</h2>
           <p class="question-help">
-            지금의 나와 더 가까운 선택을 골라주세요. 각 질문은 LoveType 4축 해석에 직접 반영됩니다.
+            가장 맞는 한 장면을 골라 주세요. 보기 위치는 문항마다 섞여 있어 패턴만으로 방향을 읽기 어렵게 설계했습니다.
           </p>
         </article>
 
         <div class="choice-list" id="choice-list" role="group" aria-labelledby="question-title">
           <button class="choice-card" type="button" data-choice-index="0">첫 번째 선택지</button>
           <button class="choice-card" type="button" data-choice-index="1">두 번째 선택지</button>
+          <button class="choice-card" type="button" data-choice-index="2">세 번째 선택지</button>
+          <button class="choice-card" type="button" data-choice-index="3">네 번째 선택지</button>
         </div>
       </section>
 
@@ -116,31 +119,32 @@
         <div class="result-topline">
           <p class="eyebrow">LoveType Result</p>
           <p class="revisit-note" id="revisit-note" hidden>
-            오늘의 테스트는 이미 완료했어요<br>
-            다시 테스트는 1일 1회만 가능합니다
+            오늘 테스트는 이미 완료되었어요.
+            <br>
+            결과는 오늘 안에 다시 볼 수 있어요.
           </p>
         </div>
 
         <div class="result-hero capture-card">
           <p class="result-label">LoveType MBTI</p>
           <h2 id="result-title" class="result-code">INFP</h2>
-          <p class="result-strength" id="result-strength">I weak / N strong / F weak / P strong</p>
-          <p class="result-summary" id="result-summary">한 줄 요약이 표시됩니다.</p>
+          <p class="result-strength" id="result-strength">관계 에너지 I weak / 인식 결 N strong / 감정 판단 F weak / 관계 리듬 P strong</p>
+          <p class="result-summary" id="result-summary">이 영역에 결과 요약이 표시됩니다.</p>
           <p class="result-cache" id="result-cache-key"></p>
         </div>
 
-        <section class="detail-card" aria-labelledby="graph-title">
+        <section class="detail-card graph-card" aria-labelledby="graph-title">
           <div class="section-header">
-            <h3 id="graph-title">LoveType 시그니처 그래프</h3>
-            <p class="section-caption">중심축 기준 수직선으로 방향과 강도를 함께 표시합니다</p>
+            <h3 id="graph-title">LoveType 흐름 그래프</h3>
+            <p class="section-caption">EI → SN → TF → JP 순서로 방향과 강도를 수평 꺾은선으로 보여줍니다.</p>
           </div>
-          <div class="signature-graph" id="signature-graph"></div>
+          <div class="line-graph" id="line-graph" role="img" aria-label="LoveType 결과 수평 꺾은선 그래프"></div>
         </section>
 
         <section class="detail-card" aria-labelledby="analysis-title">
           <div class="section-header">
             <h3 id="analysis-title">LoveType 해석</h3>
-            <p class="section-caption">기본 유형과 축별 보정을 조합한 문단형 결과입니다</p>
+            <p class="section-caption">기본 유형에 강약 판정을 합쳐, 당신의 연애 결을 조금 더 촘촘하게 읽어냅니다.</p>
           </div>
           <div class="result-prose">
             <p id="analysis-paragraph"></p>
@@ -152,19 +156,24 @@
         <section class="detail-card" aria-labelledby="share-title">
           <div class="section-header">
             <h3 id="share-title">공유 문구</h3>
+            <p class="section-caption">오늘 결과를 그대로 전달할 수 있는 한 줄 문구입니다.</p>
           </div>
           <p class="share-copy" id="share-copy"></p>
         </section>
 
         <div class="result-actions">
-          <button class="cta-button share-button" id="share-button" type="button">공유하기</button>
-          <button class="secondary-button" id="retry-button" type="button">다시 테스트하기</button>
-          <a class="download-link" href="#download">LoveType 다운로드</a>
+          <a class="cta-button story-link" id="story-link" href="#stories">더 많은 내 연애 이야기 보기</a>
+          <button class="secondary-button share-button" id="share-button" type="button">공유하기</button>
+          <a class="secondary-link" id="revisit-link" href="#result-screen">결과 다시 보기</a>
         </div>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <p>© LoveType · Powered by 디또</p>
+    </footer>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=1.2.1"></script>
 </body>
 </html>
