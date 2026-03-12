@@ -152,7 +152,7 @@
     var month = dateParts.find(function (part) { return part.type === "month"; }).value;
     var day = dateParts.find(function (part) { return part.type === "day"; }).value;
     var dateString = year + "-" + month + "-" + day;
-    var nextMidnightKstUtc = Date.UTC(Number(year), Number(month) - 1, Number(day) + 1, 15, 0, 0);
+    var nextMidnightKstUtc = Date.UTC(Number(year), Number(month) - 1, Number(day), 15, 0, 0);
 
     return {
       dateString: dateString,
@@ -546,12 +546,10 @@
   }
 
   function getStoredResultPayload() {
-    var completedDate = window.localStorage.getItem(STORAGE_COMPLETED_DATE_KEY);
-    var today = getKstDateInfo(new Date()).dateString;
     var payloadText = window.localStorage.getItem(STORAGE_RESULT_PAYLOAD_KEY);
     var storedVersion = window.localStorage.getItem(STORAGE_VERSION_KEY);
 
-    if (completedDate !== today || !payloadText || storedVersion !== APP_VERSION) {
+    if (!payloadText || storedVersion !== APP_VERSION) {
       return null;
     }
 
@@ -753,13 +751,6 @@
   }
 
   function initializeFlow() {
-    var storedPayload = getStoredResultPayload();
-
-    if (storedPayload) {
-      renderResult(storedPayload, true);
-      return;
-    }
-
     showScreen("landing");
   }
 
