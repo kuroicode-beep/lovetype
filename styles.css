@@ -742,6 +742,28 @@ h3 {
   gap: 0.8rem;
 }
 
+/* result hero image */
+.result-hero-image {
+  width: 100%;
+  max-width: 46rem;
+  margin: 0 auto 1.5rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+}
+
+.result-hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 1.2rem;
+}
+
+@media (max-width: 480px) {
+  .result-hero-image {
+    border-radius: 0.8rem;
+  }
+}
+
 .site-footer {
   width: min(100%, 42rem);
   margin: 1rem auto 0;
