@@ -130,8 +130,8 @@
         <ul class="meta-list" aria-label="테스트 정보">
           <li id="meta-question-count">20문항</li>
           <li>4지선다</li>
-          <li>축 분산 셔플</li>
-          <li>수평 꺾은선 결과</li>
+          <li>무작위 출제</li>
+          <li>흐름 그래프 결과</li>
         </ul>
 
         <div class="hero-actions">
@@ -150,14 +150,14 @@
         <p class="load-status" id="load-status" role="status" aria-live="polite"></p>
 
         <p class="support-note">
-          20문항 전체는 축 패턴이 드러나지 않도록 섞여 있으며, 결과는 각 축의 방향과 강도를 함께 반영해 해석합니다.
+          문항은 무작위로 출제되며, 결과는 4가지 관계 축의 방향과 강도를 함께 반영해 해석합니다.
         </p>
       </section>
 
       <section class="panel question-panel" id="question-screen" aria-labelledby="question-title" hidden>
         <div class="progress-block" aria-label="테스트 진행 상태">
           <div class="progress-copy">
-            <p class="eyebrow">Question Flow</p>
+            <p class="eyebrow">LoveType Test</p>
             <p class="progress-label" id="progress-label">1 / 20</p>
           </div>
           <div class="progress-bar" aria-hidden="true">
@@ -168,9 +168,9 @@
         <article class="question-card">
           <p class="question-kicker" id="question-dimension">EI · 관계 에너지</p>
           <p class="question-theme" id="question-theme">첫 흐름</p>
-          <h2 id="question-title">지금 문항이 여기에 표시됩니다.</h2>
+          <h2 id="question-title" aria-live="polite"></h2>
           <p class="question-help">
-            가장 맞는 한 장면을 골라 주세요. 보기 위치는 문항마다 섞여 있어 패턴만으로 방향을 읽기 어렵게 설계했습니다.
+            지금 나에게 가장 가까운 한 장면을 골라 주세요.
           </p>
         </article>
 
@@ -205,14 +205,13 @@
           <p class="result-label">LoveType MBTI</p>
           <h2 id="result-title" class="result-code">INFP</h2>
           <p class="result-strength" id="result-strength">관계 에너지 I weak / 인식 결 N strong / 감정 판단 F weak / 관계 리듬 P strong</p>
-          <p class="result-summary" id="result-summary">이 영역에 결과 요약이 표시됩니다.</p>
+          <p class="result-summary" id="result-summary"></p>
           <p class="result-cache" id="result-cache-key"></p>
         </div>
 
         <section class="detail-card graph-card" aria-labelledby="graph-title">
           <div class="section-header">
             <h3 id="graph-title">LoveType 흐름 그래프</h3>
-            <p class="section-caption">EI → SN → TF → JP 순서로 방향과 강도를 수평 꺾은선으로 보여줍니다.</p>
           </div>
           <div class="line-graph" id="line-graph" role="img" aria-label="LoveType 결과 수평 꺾은선 그래프"></div>
         </section>
@@ -220,7 +219,7 @@
         <section class="detail-card" aria-labelledby="analysis-title">
           <div class="section-header">
             <h3 id="analysis-title">LoveType 해석</h3>
-            <p class="section-caption">기본 유형에 강약 판정을 합쳐, 당신의 연애 결을 조금 더 촘촘하게 읽어냅니다.</p>
+            <p class="section-caption">당신의 연애 결을 조금 더 깊이 읽어드립니다.</p>
           </div>
           <div class="result-prose">
             <p id="analysis-paragraph"></p>
@@ -232,7 +231,6 @@
         <section class="detail-card" aria-labelledby="share-title">
           <div class="section-header">
             <h3 id="share-title">공유 문구</h3>
-            <p class="section-caption">오늘 결과를 그대로 전달할 수 있는 한 줄 문구입니다.</p>
           </div>
           <p class="share-copy" id="share-copy"></p>
         </section>
