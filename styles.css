@@ -488,7 +488,7 @@ h3 {
 }
 
 .result-cache {
-  word-break: break-word;
+  display: none;
 }
 
 .graph-card {
