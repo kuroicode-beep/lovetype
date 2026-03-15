@@ -705,19 +705,20 @@
     }
 
     var shareText = state.resultPayload.result.share_text + "\n" + state.resultPayload.cache_key;
+    var shareUrl = "https://kuroicode-beep.github.io/lovetype/";
 
     if (navigator.share) {
       navigator.share({
-        title: "LoveType 결과",
+        title: "나의 LoveType 결과",
         text: shareText,
-        url: window.location.href
+        url: shareUrl
       }).catch(function () {});
       return;
     }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(shareText).then(function () {
-        window.alert("공유 문구를 복사했어요.");
+      navigator.clipboard.writeText(shareText + "\n" + shareUrl).then(function () {
+        window.alert("공유 문구가 복사됐어요 🩷");
       }).catch(function () {
         window.alert(shareText);
       });
