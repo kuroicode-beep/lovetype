@@ -2,6 +2,7 @@
   var STORAGE_THEME_KEY = "theme_mode";
   var STORAGE_RESULT_PAYLOAD_KEY = "lovetype_result_payload";
   var STORAGE_COMPLETED_DATE_KEY = "completed_date";
+  var STORAGE_DAILY_COUNT_KEY = "daily_count";
   var STORAGE_RESULT_KEY = "mbti_result";
   var STORAGE_AXIS_KEY = "axis_scores";
   var STORAGE_AXIS_STRENGTH_KEY = "axis_strength";
@@ -11,7 +12,8 @@
   var STORAGE_SUMMARY_KEY = "result_summary";
   var STORAGE_DETAIL_KEY = "result_detail";
   var STORAGE_NEXT_AVAILABLE_KEY = "next_available_at";
-  var APP_VERSION = "1.2.1";
+  var APP_VERSION = "1.2.2";
+  var DAILY_LIMIT = 3;
 
   var HIGH_CONTRAST = "hc";
   var DEFAULT_THEME = "default";
@@ -139,6 +141,25 @@
 
   function hideFatalMessage() {
     setLoadStatus("");
+  }
+
+  function checkDailyLimit() {
+    var todayString = getKstDateInfo(new Date()).dateString;
+    var savedDate = window.localStorage.getItem(STORAGE_COMPLETED_DATE_KEY);
+    var savedCount = parseInt(window.localStorage.getItem(STORAGE_DAILY_COUNT_KEY) || "0", 10);
+
+    if (savedDate !== todayString) {
+      window.localStorage.setItem(STORAGE_COMPLETED_DATE_KEY, todayString);
+      window.localStorage.setItem(STORAGE_DAILY_COUNT_KEY, "0");
+      return true;
+    }
+
+    return savedCount < DAILY_LIMIT;
+  }
+
+  function incrementDailyCount() {
+    var savedCount = parseInt(window.localStorage.getItem(STORAGE_DAILY_COUNT_KEY) || "0", 10);
+    window.localStorage.setItem(STORAGE_DAILY_COUNT_KEY, String(savedCount + 1));
   }
 
   function getKstDateInfo(date) {
@@ -299,6 +320,11 @@
   function startTest() {
     if (!state.questionsData) {
       setLoadStatus("문항 데이터를 준비하는 중이에요.");
+      return;
+    }
+
+    if (!checkDailyLimit()) {
+      setLoadStatus("오늘은 최대 3번까지 테스트할 수 있어요. 내일 자정 이후에 다시 도전해보세요.");
       return;
     }
 
@@ -681,7 +707,7 @@
     elements.shareCopy.textContent = payload.result.share_text;
     elements.revisitNote.hidden = !isLocked;
     elements.revisitLink.setAttribute("href", "#result-screen");
-    elements.storyLink.setAttribute("href", "#stories");
+    elements.storyLink.setAttribute("href", "#");
     renderLineGraph(payload);
     showHeaderShareBtn();
   }
@@ -692,8 +718,9 @@
     requestResultFromApi(buildResultRequest())
       .then(function (payload) {
         saveResultPayload(payload);
+        incrementDailyCount();
         hideFatalMessage();
-        renderResult(payload, true);
+        renderResult(payload, !checkDailyLimit());
       })
       .catch(function () {
         showFatalMessage("결과를 생성하지 못했어요. 잠시 뒤 다시 시도해 주세요.");
@@ -766,14 +793,25 @@
     if (elements.headerShareBtn) {
       elements.headerShareBtn.addEventListener("click", shareResult);
     }
+    if (elements.storyLink) {
+      elements.storyLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.alert("현재 개발 중입니다. 조금만 기다려 주세요 🩷");
+      });
+    }
   }
 
   function initializeFlow() {
-    var storedPayload = getStoredResultPayload();
+    var todayString = getKstDateInfo(new Date()).dateString;
+    var savedDate = window.localStorage.getItem(STORAGE_COMPLETED_DATE_KEY);
+    var savedCount = parseInt(window.localStorage.getItem(STORAGE_DAILY_COUNT_KEY) || "0", 10);
 
-    if (storedPayload) {
-      renderResult(storedPayload, true);
-      return;
+    if (savedDate === todayString && savedCount >= DAILY_LIMIT) {
+      var storedPayload = getStoredResultPayload();
+      if (storedPayload) {
+        renderResult(storedPayload, true);
+        return;
+      }
     }
 
     showScreen("landing");
