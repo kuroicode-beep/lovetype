@@ -88,7 +88,8 @@
     shareButton: document.getElementById("share-button"),
     revisitLink: document.getElementById("revisit-link"),
     storyLink: document.getElementById("story-link"),
-    revisitNote: document.getElementById("revisit-note")
+    revisitNote: document.getElementById("revisit-note"),
+    headerShareBtn: document.getElementById("header-share-btn")
   };
 
   function setStartButtonDisabled(disabled) {
@@ -682,6 +683,7 @@
     elements.revisitLink.setAttribute("href", "#result-screen");
     elements.storyLink.setAttribute("href", "#stories");
     renderLineGraph(payload);
+    showHeaderShareBtn();
   }
 
   function finalizeTest() {
@@ -697,6 +699,18 @@
         showFatalMessage("결과를 생성하지 못했어요. 잠시 뒤 다시 시도해 주세요.");
         showScreen("landing");
       });
+  }
+
+  function showHeaderShareBtn() {
+    if (elements.headerShareBtn) {
+      elements.headerShareBtn.hidden = false;
+    }
+  }
+
+  function hideHeaderShareBtn() {
+    if (elements.headerShareBtn) {
+      elements.headerShareBtn.hidden = true;
+    }
   }
 
   function shareResult() {
@@ -749,9 +763,19 @@
       });
     });
     elements.shareButton.addEventListener("click", shareResult);
+    if (elements.headerShareBtn) {
+      elements.headerShareBtn.addEventListener("click", shareResult);
+    }
   }
 
   function initializeFlow() {
+    var storedPayload = getStoredResultPayload();
+
+    if (storedPayload) {
+      renderResult(storedPayload, true);
+      return;
+    }
+
     showScreen("landing");
   }
 

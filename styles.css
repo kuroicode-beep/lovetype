@@ -112,6 +112,7 @@ button {
 .main-content,
 .hero-copy,
 .theme-toggle-wrap,
+.header-actions,
 .meta-list,
 .hero-actions,
 .progress-copy,
@@ -122,6 +123,7 @@ button {
 
 .site-header,
 .theme-toggle-wrap,
+.header-actions,
 .hero-copy,
 .hero-actions {
   align-items: center;
@@ -183,6 +185,57 @@ button {
 
 .theme-toggle-wrap {
   gap: 0.75rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--pink);
+  background: transparent;
+  color: var(--pink);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+  white-space: nowrap;
+  min-height: 2.75rem;
+}
+
+.header-share-btn:hover,
+.header-share-btn:focus-visible {
+  background: var(--pink);
+  color: #fff;
+  outline: none;
+}
+
+[data-theme="hc"] .header-share-btn {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+[data-theme="hc"] .header-share-btn:hover,
+[data-theme="hc"] .header-share-btn:focus-visible {
+  background: var(--pink);
+  color: var(--ink);
+}
+
+@media (max-width: 480px) {
+  .header-share-btn span {
+    display: none;
+  }
+
+  .header-share-btn {
+    padding: 0.45rem 0.6rem;
+  }
 }
 
 .toggle-label {
