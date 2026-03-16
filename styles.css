@@ -360,6 +360,20 @@ h3 {
 }
 
 .hero-description,
+.theory-note {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+[data-theme="hc"] .theory-note {
+  color: var(--text-subtle);
+  opacity: 1;
+}
+
 .support-note,
 .question-help,
 .question-theme,
