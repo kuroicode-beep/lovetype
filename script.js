@@ -743,7 +743,13 @@
 
     section.hidden = false;
 
-    var cacheKey = "compat_cache_" + mbti;
+    var strengthStr = [
+      axisStrength.EI.winner + "_" + axisStrength.EI.level,
+      axisStrength.SN.winner + "_" + axisStrength.SN.level,
+      axisStrength.TF.winner + "_" + axisStrength.TF.level,
+      axisStrength.JP.winner + "_" + axisStrength.JP.level
+    ].join("__");
+    var cacheKey = "compat_cache_" + mbti + "__" + strengthStr;
     var cached = window.localStorage.getItem(cacheKey);
 
     if (cached) {
