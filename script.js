@@ -1,4 +1,18 @@
 (function () {
+  window.showHeaderShareBtn = function () {
+    var btn = document.getElementById("header-share-btn");
+    if (btn) {
+      btn.removeAttribute("hidden");
+      btn.style.display = "inline-flex";
+    }
+  };
+  window.hideHeaderShareBtn = function () {
+    var btn = document.getElementById("header-share-btn");
+    if (btn) {
+      btn.hidden = true;
+      btn.style.display = "";
+    }
+  };
   var STORAGE_THEME_KEY = "theme_mode";
   var STORAGE_RESULT_PAYLOAD_KEY = "lovetype_result_payload";
   var STORAGE_COMPLETED_DATE_KEY = "completed_date";
@@ -355,7 +369,7 @@
     }
 
     logEvent("test_start");
-    hideHeaderShareBtn();
+    window.hideHeaderShareBtn();
     resetTestState();
     state.renderedQuestions = buildShuffledQuestions(state.questionsData.questions);
     hideFatalMessage();
@@ -888,7 +902,7 @@
   function renderResult(payload, isLocked) {
     state.resultPayload = payload;
     showScreen("result");
-    showHeaderShareBtn();
+    window.showHeaderShareBtn();
     elements.resultCode.textContent = payload.mbti;
     elements.resultStrength.textContent = buildStrengthDisplay(payload.axis_strength);
     elements.resultSummary.textContent = payload.result.summary;
@@ -955,22 +969,6 @@
         showFatalMessage("결과를 생성하지 못했어요. 잠시 뒤 다시 시도해 주세요.");
         showScreen("landing");
       });
-  }
-
-  function showHeaderShareBtn() {
-    var btn = document.getElementById("header-share-btn");
-    if (btn) {
-      btn.removeAttribute("hidden");
-      btn.style.display = "inline-flex";
-    }
-  }
-
-  function hideHeaderShareBtn() {
-    var btn = document.getElementById("header-share-btn");
-    if (btn) {
-      btn.hidden = true;
-      btn.style.display = "";
-    }
   }
 
   function shareResult() {
@@ -1081,8 +1079,6 @@
       });
   }
 
-  window.showHeaderShareBtn = showHeaderShareBtn;
-  window.hideHeaderShareBtn = hideHeaderShareBtn;
   initializeTheme();
   initializeEvents();
   initializeApp();
