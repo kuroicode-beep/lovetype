@@ -601,14 +601,27 @@
   }
 
   function getStoredResultPayload() {
-    var payloadText = window.localStorage.getItem(STORAGE_RESULT_PAYLOAD_KEY);
-    var storedVersion = window.localStorage.getItem(STORAGE_VERSION_KEY);
+    try {
+      var payloadText = window.localStorage.getItem(STORAGE_RESULT_PAYLOAD_KEY);
+      if (!payloadText) {
+        return null;
+      }
 
-    if (!payloadText || storedVersion !== APP_VERSION) {
+      var storedVersion = window.localStorage.getItem(STORAGE_VERSION_KEY);
+      if (storedVersion !== APP_VERSION) {
+        window.localStorage.removeItem(STORAGE_RESULT_PAYLOAD_KEY);
+        return null;
+      }
+
+      return JSON.parse(payloadText);
+    } catch (e) {
+      console.warn("[LoveType] 저장된 결과 파싱 실패, 초기화:", e.message);
+      window.localStorage.removeItem(STORAGE_RESULT_PAYLOAD_KEY);
+      window.localStorage.removeItem(STORAGE_VERSION_KEY);
+      window.localStorage.removeItem(STORAGE_COMPLETED_DATE_KEY);
+      window.localStorage.removeItem(STORAGE_DAILY_COUNT_KEY);
       return null;
     }
-
-    return JSON.parse(payloadText);
   }
 
   function buildStrengthDisplay(axisStrength) {
@@ -743,6 +756,10 @@
     }
 
     section.hidden = false;
+
+    loading.textContent = "AI가 분석 중이에요...";
+    loading.hidden = false;
+    result.hidden = true;
 
     var strengthStr = [
       axisStrength.EI.winner + "_" + axisStrength.EI.level,
