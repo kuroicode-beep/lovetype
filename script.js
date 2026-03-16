@@ -17,7 +17,8 @@
 
   var HIGH_CONTRAST = "hc";
   var DEFAULT_THEME = "default";
-  var API_ENDPOINT = "/api/mbti-test/result";
+  var API_BASE_URL = "https://lovetype-api-production.up.railway.app";
+  var API_ENDPOINT = API_BASE_URL + "/api/mbti-test/result";
   var AXIS_SEQUENCE = ["EI", "SN", "TF", "JP"];
   var GRAPH_LABELS = {
     EI: "관계 에너지",
@@ -102,6 +103,31 @@
     elements.startButton.disabled = disabled;
     elements.startButton.setAttribute("aria-disabled", String(disabled));
     elements.startButton.setAttribute("aria-busy", String(disabled));
+  }
+
+  function getSessionId() {
+    var sessionId = window.localStorage.getItem("lovetype_session_id");
+    if (!sessionId) {
+      sessionId = (typeof crypto !== "undefined" && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : Date.now().toString(36) + Math.random().toString(36).slice(2);
+      window.localStorage.setItem("lovetype_session_id", sessionId);
+    }
+    return sessionId;
+  }
+
+  function logEvent(eventType, eventValue, step) {
+    fetch(API_BASE_URL + "/api/event", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: getSessionId(),
+        app_id: "lovetype",
+        event_type: eventType,
+        event_value: eventValue || null,
+        step: step || null
+      })
+    }).catch(function () {});
   }
 
   function getStoredTheme() {
@@ -328,6 +354,7 @@
       return;
     }
 
+    logEvent("test_start");
     resetTestState();
     state.renderedQuestions = buildShuffledQuestions(state.questionsData.questions);
     hideFatalMessage();
@@ -694,6 +721,55 @@
     ].join("");
   }
 
+  function loadCompatibility(mbti, axisStrength) {
+    var section = document.querySelector(".compatibility-section");
+    var loading = document.getElementById("compatibility-loading");
+    var result = document.getElementById("compatibility-result");
+
+    if (!section) {
+      return;
+    }
+
+    section.hidden = false;
+
+    var axisStrengthFlat = {
+      EI: axisStrength.EI.winner + "_" + axisStrength.EI.level,
+      SN: axisStrength.SN.winner + "_" + axisStrength.SN.level,
+      TF: axisStrength.TF.winner + "_" + axisStrength.TF.level,
+      JP: axisStrength.JP.winner + "_" + axisStrength.JP.level
+    };
+
+    fetch(API_BASE_URL + "/api/mbti-test/compatibility", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mbti: mbti,
+        axis_strength: axisStrengthFlat,
+        app_id: "lovetype"
+      })
+    })
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+        return res.json();
+      })
+      .then(function (data) {
+        document.getElementById("compat-best-type").textContent = data.best.type;
+        document.getElementById("compat-best-reason").textContent = data.best.reason;
+        document.getElementById("compat-unexpected-type").textContent = data.unexpected.type;
+        document.getElementById("compat-unexpected-reason").textContent = data.unexpected.reason;
+        document.getElementById("compat-caution-type").textContent = data.caution.type;
+        document.getElementById("compat-caution-reason").textContent = data.caution.reason;
+        loading.hidden = true;
+        result.hidden = false;
+      })
+      .catch(function (e) {
+        loading.textContent = "AI 분석을 불러오지 못했어요.";
+        console.warn("[API] compatibility 실패:", e.message);
+      });
+  }
+
   function renderResult(payload, isLocked) {
     state.resultPayload = payload;
     showScreen("result");
@@ -710,6 +786,31 @@
     elements.storyLink.setAttribute("href", "#");
     renderLineGraph(payload);
     showHeaderShareBtn();
+    loadCompatibility(payload.mbti, payload.axis_strength);
+  }
+
+  function saveResultToAPI(payload) {
+    var axisStrengthFlat = {
+      EI: payload.axis_strength.EI.winner + "_" + payload.axis_strength.EI.level,
+      SN: payload.axis_strength.SN.winner + "_" + payload.axis_strength.SN.level,
+      TF: payload.axis_strength.TF.winner + "_" + payload.axis_strength.TF.level,
+      JP: payload.axis_strength.JP.winner + "_" + payload.axis_strength.JP.level
+    };
+
+    fetch(API_BASE_URL + "/api/mbti-test/result", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: getSessionId(),
+        app_id: "lovetype",
+        cache_key: payload.cache_key,
+        mbti: payload.mbti,
+        axis_strength: axisStrengthFlat,
+        result_data: payload.result
+      })
+    }).catch(function (e) {
+      console.warn("[API] result 저장 실패 (로컬 계속):", e.message);
+    });
   }
 
   function finalizeTest() {
@@ -718,8 +819,10 @@
     requestResultFromApi(buildResultRequest())
       .then(function (payload) {
         saveResultPayload(payload);
+        saveResultToAPI(payload);
         incrementDailyCount();
         hideFatalMessage();
+        logEvent("result_view", payload.mbti);
         renderResult(payload, !checkDailyLimit());
       })
       .catch(function () {
@@ -746,6 +849,7 @@
     }
 
     var shareText = state.resultPayload.result.share_text + "\n" + state.resultPayload.cache_key;
+    logEvent("share_click");
     var shareUrl = "https://kuroicode-beep.github.io/lovetype/";
 
     if (navigator.share) {
@@ -802,6 +906,8 @@
   }
 
   function initializeFlow() {
+    logEvent("page_view");
+
     var todayString = getKstDateInfo(new Date()).dateString;
     var savedDate = window.localStorage.getItem(STORAGE_COMPLETED_DATE_KEY);
     var savedCount = parseInt(window.localStorage.getItem(STORAGE_DAILY_COUNT_KEY) || "0", 10);
@@ -809,6 +915,7 @@
     if (savedDate === todayString && savedCount >= DAILY_LIMIT) {
       var storedPayload = getStoredResultPayload();
       if (storedPayload) {
+        logEvent("result_view", storedPayload.mbti);
         renderResult(storedPayload, true);
         return;
       }
