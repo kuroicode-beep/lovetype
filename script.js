@@ -355,6 +355,7 @@
     }
 
     logEvent("test_start");
+    hideHeaderShareBtn();
     resetTestState();
     state.renderedQuestions = buildShuffledQuestions(state.questionsData.questions);
     hideFatalMessage();
@@ -793,13 +794,18 @@
       });
   }
 
-  function generateResultCode(mbti, axisStrength) {
-    function strengthToNum(strengthStr) {
+  function generateResultCode(mbti, axisStrength, axisScores) {
+    function strengthToNum(strengthStr, axisScore) {
       if (!strengthStr) {
         return 2;
       }
       if (strengthStr.indexOf("strong") !== -1) {
-        return strengthStr.indexOf("5") !== -1 ? 5 : 4;
+        if (axisScore !== undefined && axisScore !== null) {
+          var values = Object.keys(axisScore).map(function (k) { return axisScore[k]; });
+          var maxVal = Math.max.apply(null, values);
+          return maxVal >= 5 ? 5 : 4;
+        }
+        return 4;
       }
       return 2;
     }
@@ -810,10 +816,10 @@
     var jpStr = axisStrength.JP ? axisStrength.JP.winner + "_" + axisStrength.JP.level : "";
 
     return (
-      mbti[0] + strengthToNum(eiStr) +
-      mbti[1] + strengthToNum(snStr) +
-      mbti[2] + strengthToNum(tfStr) +
-      mbti[3] + strengthToNum(jpStr)
+      mbti[0] + strengthToNum(eiStr, axisScores && axisScores.EI) +
+      mbti[1] + strengthToNum(snStr, axisScores && axisScores.SN) +
+      mbti[2] + strengthToNum(tfStr, axisScores && axisScores.TF) +
+      mbti[3] + strengthToNum(jpStr, axisScores && axisScores.JP)
     );
   }
 
@@ -878,12 +884,12 @@
     elements.storyLink.setAttribute("href", "#");
     renderLineGraph(payload);
     showHeaderShareBtn();
-    renderResultCode(generateResultCode(payload.mbti, payload.axis_strength));
+    renderResultCode(generateResultCode(payload.mbti, payload.axis_strength, payload.axis_scores));
     loadCompatibility(payload.mbti, payload.axis_strength);
   }
 
   function saveResultToAPI(payload) {
-    var todayKST = new Date().toLocaleDateString("ko-KR", { timeZone: "Asia/Seoul" });
+    var todayKST = getKstDateInfo(new Date()).dateString;
     var savedDate = window.localStorage.getItem("api_result_saved_date");
     if (savedDate === todayKST) {
       return;
