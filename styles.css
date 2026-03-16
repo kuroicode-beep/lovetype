@@ -124,8 +124,12 @@ button {
 .site-header,
 .theme-toggle-wrap,
 .header-actions,
-.hero-copy,
+.hero-copy {
+  align-items: center;
+}
+
 .hero-actions {
+  flex-direction: column;
   align-items: center;
 }
 
@@ -366,6 +370,8 @@ h3 {
 
 .hero-description,
 .theory-note {
+  display: block;
+  width: 100%;
   margin-top: 0.75rem;
   font-size: 0.75rem;
   color: var(--text-subtle);
