@@ -1,22 +1,22 @@
-﻿{
-  "version": "1.0.1",
-  "default": "{mbti} LoveType 결과: {summary}",
+{
+  "version": "1.1.0",
+  "default": "나의 LoveType은 {mbti} — {summary}",
   "templates": {
-    "ISTJ": "{mbti} LoveType, 차분함 속에서 신뢰를 쌓아가는 안정형 타입",
-    "ISFJ": "{mbti} LoveType, 따뜻한 배려로 마음을 지켜주는 보호형 타입",
-    "INFJ": "{mbti} LoveType, 조용한 깊이와 진정성을 품은 통찰형 타입",
-    "INTJ": "{mbti} LoveType, 선택하면 오래 가는 신중한 전략형 타입",
-    "ISTP": "{mbti} LoveType, 담백하지만 필요할 때는 확실한 실전형 타입",
-    "ISFP": "{mbti} LoveType, 부드러운 감수성과 편안함을 사랑하는 감각형 타입",
-    "INFP": "{mbti} LoveType, 이상과 진심을 함께 품는 로맨틱 타입",
-    "INTP": "{mbti} LoveType, 생각의 합과 자유를 중시하는 탐구형 타입",
-    "ESTP": "{mbti} LoveType, 현장감과 에너지로 관계를 움직이는 액션형 타입",
-    "ESFP": "{mbti} LoveType, 감정 표현과 생동감이 풍부한 즐거움형 타입",
-    "ENFP": "{mbti} LoveType, 설렘과 진심을 동시에 확장하는 영감형 타입",
-    "ENTP": "{mbti} LoveType, 재치와 호기심으로 사랑을 흥미롭게 만드는 발상형 타입",
-    "ESTJ": "{mbti} LoveType, 기준과 실행력으로 관계를 안정시키는 운영형 타입",
-    "ESFJ": "{mbti} LoveType, 돌봄과 선명한 애정 표현으로 관계를 살리는 교감형 타입",
-    "ENFJ": "{mbti} LoveType, 마음과 방향을 함께 이끄는 관계 중심형 타입",
-    "ENTJ": "{mbti} LoveType, 분명한 의지와 추진력으로 사랑도 설계하는 주도형 타입"
+    "ISTJ": "나의 LoveType은 {mbti} 💙\n말보다 행동으로 믿음을 쌓아가는 안정형이래요. 오래 가는 사람 찾는다면 저한테 연락해요 🙂",
+    "ISFJ": "나의 LoveType은 {mbti} 🌷\n조용한 배려로 관계를 오래 지켜주는 보호형이래요. 곁에 있으면 따뜻한 사람이 되고 싶어요.",
+    "INFJ": "나의 LoveType은 {mbti} 🌙\n조용하지만 깊이 있게 연결되는 통찰형이래요. 말 안 해도 마음 읽히는 느낌 아는 사람?",
+    "INTJ": "나의 LoveType은 {mbti} 🖤\n한번 선택하면 오래 가는 신중한 전략형이래요. 쉽게 마음 안 열지만 열리면 진짜예요.",
+    "ISTP": "나의 LoveType은 {mbti} 🔧\n담백하지만 필요할 때는 확실한 실전형이래요. 말은 적어도 행동으로 보여주는 타입.",
+    "ISFP": "나의 LoveType은 {mbti} 🌸\n부드러운 감수성과 편안함을 사랑하는 감각형이래요. 같이 있으면 그냥 편안한 사람이고 싶어요.",
+    "INFP": "나의 LoveType은 {mbti} 💜\n이상과 진심을 함께 품는 로맨틱 타입이래요. 연애에 진심인 사람 여기 있어요.",
+    "INTP": "나의 LoveType은 {mbti} 🔭\n생각이 통하는 자유로운 관계를 찾는 탐구형이래요. 대화 잘 통하는 사람 찾고 있어요.",
+    "ESTP": "나의 LoveType은 {mbti} ⚡\n현장감과 에너지로 관계를 움직이는 액션형이래요. 같이 있으면 심심할 틈이 없대요.",
+    "ESFP": "나의 LoveType은 {mbti} 🎉\n감정 표현과 생동감이 넘치는 즐거움형이래요. 사랑받고 있다는 느낌 확실하게 줄 수 있어요.",
+    "ENFP": "나의 LoveType은 {mbti} 🌈\n설렘과 진심을 동시에 확장하는 영감형이래요. 같이 있으면 세상이 좀 더 넓어지는 느낌.",
+    "ENTP": "나의 LoveType은 {mbti} 💡\n재치와 호기심으로 사랑을 흥미롭게 만드는 발상형이래요. 예상 밖 매력이 있다고 하더라고요.",
+    "ESTJ": "나의 LoveType은 {mbti} 📋\n기준과 실행력으로 관계를 안정시키는 운영형이래요. 믿고 기댈 수 있는 사람이 되고 싶어요.",
+    "ESFJ": "나의 LoveType은 {mbti} 🤝\n돌봄과 선명한 애정 표현으로 관계를 살리는 교감형이래요. 챙기는 거 좋아해서 가끔 과할 수도 있어요.",
+    "ENFJ": "나의 LoveType은 {mbti} 🌟\n마음과 방향을 함께 이끄는 관계 중심형이래요. 좋아하면 더 좋아질 수 있게 옆에서 같이 커가고 싶어요.",
+    "ENTJ": "나의 LoveType은 {mbti} 🚀\n분명한 의지와 추진력으로 사랑도 설계하는 주도형이래요. 확신 생기면 빠르게 움직이는 타입이에요."
   }
 }

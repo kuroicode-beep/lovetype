@@ -888,6 +888,7 @@
   function renderResult(payload, isLocked) {
     state.resultPayload = payload;
     showScreen("result");
+    showHeaderShareBtn();
     elements.resultCode.textContent = payload.mbti;
     elements.resultStrength.textContent = buildStrengthDisplay(payload.axis_strength);
     elements.resultSummary.textContent = payload.result.summary;
@@ -900,7 +901,6 @@
     elements.revisitLink.setAttribute("href", "#result-screen");
     elements.storyLink.setAttribute("href", "#");
     renderLineGraph(payload);
-    showHeaderShareBtn();
     renderResultCode(generateResultCode(payload.mbti, payload.axis_strength, payload.axis_scores));
     loadCompatibility(payload.mbti, payload.axis_strength);
   }
