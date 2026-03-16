@@ -1038,11 +1038,11 @@
     var savedDate = window.localStorage.getItem(STORAGE_COMPLETED_DATE_KEY);
     var savedCount = parseInt(window.localStorage.getItem(STORAGE_DAILY_COUNT_KEY) || "0", 10);
 
-    if (savedDate === todayString && savedCount >= DAILY_LIMIT) {
+    if (savedDate === todayString && savedCount >= 1) {
       var storedPayload = getStoredResultPayload();
       if (storedPayload) {
         logEvent("result_view", storedPayload.mbti);
-        renderResult(storedPayload, true);
+        renderResult(storedPayload, !checkDailyLimit());
         return;
       }
     }
