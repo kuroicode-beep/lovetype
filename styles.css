@@ -233,12 +233,10 @@ button {
 }
 
 @media (max-width: 480px) {
-  .header-share-btn span {
-    display: none;
-  }
-
   .header-share-btn {
-    padding: 0.45rem 0.6rem;
+    gap: 0.3rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8125rem;
   }
 }
 

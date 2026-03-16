@@ -369,7 +369,6 @@
     }
 
     logEvent("test_start");
-    window.hideHeaderShareBtn();
     resetTestState();
     state.renderedQuestions = buildShuffledQuestions(state.questionsData.questions);
     hideFatalMessage();
@@ -972,11 +971,10 @@
   }
 
   function shareResult() {
-    if (!state.resultPayload) {
-      return;
-    }
-
-    var shareText = state.resultPayload.result.share_text + "\n" + state.resultPayload.cache_key;
+    var hasResult = !!state.resultPayload;
+    var shareText = hasResult
+      ? state.resultPayload.result.share_text + "\n" + state.resultPayload.cache_key
+      : "LoveType에서 내 연애 유형을 테스트해보세요.";
     logEvent("share_click");
     var shareUrl = "https://kuroicode-beep.github.io/lovetype/";
 
