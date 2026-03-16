@@ -1,6 +1,6 @@
-﻿{
+{
   "service": "LoveType",
-  "version": "v2.0.0",
+  "version": "v2.1.0",
   "locale": "ko-KR",
   "totalQuestions": 20,
   "dimensions": {
@@ -14,131 +14,131 @@
       "questionId": 1,
       "axis": "EI",
       "theme": "호감 톡",
-      "prompt": "호감 있는 사람이 톡을 보내면 너는?",
+      "prompt": "좋아하는 사람한테 톡이 왔다. 나는?",
       "options": [
-        { "id": "1A", "label": "바로 답장하고 가볍게 농담도 섞는다", "axis": "EI", "value": "E" },
-        { "id": "1B", "label": "답장은 빠르지만 톤은 차분하게 맞춘다", "axis": "EI", "value": "I" },
-        { "id": "1C", "label": "대화가 끊기지 않게 질문을 던진다", "axis": "EI", "value": "E" },
-        { "id": "1D", "label": "조금 고민하다가 자연스러운 타이밍에 보낸다", "axis": "EI", "value": "I" }
+        { "id": "1A", "label": "바로 답장, 슬쩍 농담도 하나 끼워 넣는다", "axis": "EI", "value": "E" },
+        { "id": "1B", "label": "빨리 답장하긴 하는데 톤은 차분하게", "axis": "EI", "value": "I" },
+        { "id": "1C", "label": "대화 끊길까봐 질문 하나 더 달아 보낸다", "axis": "EI", "value": "E" },
+        { "id": "1D", "label": "잠깐 고민하다가 자연스러운 타이밍에 보낸다", "axis": "EI", "value": "I" }
       ]
     },
     {
       "questionId": 2,
       "axis": "SN",
       "theme": "첫인상",
-      "prompt": "처음 만난 사람에게 더 먼저 끌리는 포인트는?",
+      "prompt": "처음 만났는데 괜찮다 싶을 때, 끌리는 포인트는?",
       "options": [
-        { "id": "2A", "label": "말투, 분위기, 행동 같은 눈에 보이는 디테일", "axis": "SN", "value": "S" },
-        { "id": "2B", "label": "말로 설명 안 돼도 '이 사람 좋다' 싶은 느낌", "axis": "SN", "value": "N" },
-        { "id": "2C", "label": "취향이나 생활 패턴이 실제로 잘 맞는 부분", "axis": "SN", "value": "S" },
-        { "id": "2D", "label": "앞으로 어떤 이야기가 펼쳐질지의 가능성", "axis": "SN", "value": "N" }
+        { "id": "2A", "label": "말투, 표정, 행동 — 눈에 보이는 디테일이 좋다", "axis": "SN", "value": "S" },
+        { "id": "2B", "label": "설명 못 해도 '이 사람이다' 싶은 그 느낌", "axis": "SN", "value": "N" },
+        { "id": "2C", "label": "생활 패턴이나 취향이 나랑 잘 맞는 것 같다", "axis": "SN", "value": "S" },
+        { "id": "2D", "label": "앞으로 어떤 이야기가 생길지 기대가 된다", "axis": "SN", "value": "N" }
       ]
     },
     {
       "questionId": 3,
       "axis": "TF",
       "theme": "서운함",
-      "prompt": "상대가 살짝 서운해 보일 때 너의 첫 반응은?",
+      "prompt": "상대가 왠지 좀 서운한 것 같다. 내 첫 반응은?",
       "options": [
-        { "id": "3A", "label": "어떤 상황에서 그런 감정이 생겼는지 먼저 파악한다", "axis": "TF", "value": "T" },
-        { "id": "3B", "label": "마음이 다치지 않게 톤을 낮춰서 다가간다", "axis": "TF", "value": "F" },
-        { "id": "3C", "label": "문제의 원인을 차분히 정리해본다", "axis": "TF", "value": "T" },
-        { "id": "3D", "label": "일단 감정을 먼저 풀어주는 게 더 중요하다", "axis": "TF", "value": "F" }
+        { "id": "3A", "label": "뭐가 문제였는지 상황부터 파악하려 한다", "axis": "TF", "value": "T" },
+        { "id": "3B", "label": "마음 다칠까봐 일단 말 조심하면서 다가간다", "axis": "TF", "value": "F" },
+        { "id": "3C", "label": "원인을 차분히 정리하고 싶다", "axis": "TF", "value": "T" },
+        { "id": "3D", "label": "원인보다 감정 먼저 풀어주는 게 맞다고 본다", "axis": "TF", "value": "F" }
       ]
     },
     {
       "questionId": 4,
       "axis": "JP",
       "theme": "데이트 약속",
-      "prompt": "데이트 약속이 잡힌 날, 더 편한 흐름은?",
+      "prompt": "데이트 날 잡혔을 때, 더 설레는 시나리오는?",
       "options": [
-        { "id": "4A", "label": "시간·장소가 어느 정도 정해져 있어야 마음이 놓인다", "axis": "JP", "value": "J" },
-        { "id": "4B", "label": "그날 분위기 따라 자연스럽게 흘러가는 게 좋다", "axis": "JP", "value": "P" },
-        { "id": "4C", "label": "다음 장면이 예상될수록 설렌다", "axis": "JP", "value": "J" },
-        { "id": "4D", "label": "즉흥적인 변화가 있어야 더 재밌다", "axis": "JP", "value": "P" }
+        { "id": "4A", "label": "시간이랑 장소가 어느 정도 정해져 있어야 마음이 편하다", "axis": "JP", "value": "J" },
+        { "id": "4B", "label": "그날 기분 따라 흘러가는 게 오히려 좋다", "axis": "JP", "value": "P" },
+        { "id": "4C", "label": "다음 일정이 보일수록 더 기대된다", "axis": "JP", "value": "J" },
+        { "id": "4D", "label": "즉흥으로 생기는 장면이 더 재밌다", "axis": "JP", "value": "P" }
       ]
     },
     {
       "questionId": 5,
       "axis": "EI",
       "theme": "연락 템포",
-      "prompt": "연락이 조금 뜸해졌을 때 너는?",
+      "prompt": "연락이 좀 뜸해졌다. 나는?",
       "options": [
-        { "id": "5A", "label": "가볍게 먼저 톡을 보내 분위기를 다시 살린다", "axis": "EI", "value": "E" },
-        { "id": "5B", "label": "내 마음을 정리한 뒤 자연스러운 타이밍을 기다린다", "axis": "EI", "value": "I" },
+        { "id": "5A", "label": "가벼운 톡 하나 먼저 날려서 분위기를 살린다", "axis": "EI", "value": "E" },
+        { "id": "5B", "label": "마음 정리하고 자연스러운 타이밍을 기다린다", "axis": "EI", "value": "I" },
         { "id": "5C", "label": "어색해지기 전에 반응 하나 더 보낸다", "axis": "EI", "value": "E" },
-        { "id": "5D", "label": "괜히 급하게 굴기보다 흐름을 지켜본다", "axis": "EI", "value": "I" }
+        { "id": "5D", "label": "괜히 급하게 굴지 말고 흐름을 지켜본다", "axis": "EI", "value": "I" }
       ]
     },
     {
       "questionId": 6,
       "axis": "SN",
       "theme": "데이트 스타일",
-      "prompt": "더 끌리는 데이트 스타일은?",
+      "prompt": "딱 내 스타일이다 싶은 데이트는?",
       "options": [
-        { "id": "6A", "label": "맛집·동선·분위기까지 실제 경험이 살아 있는 데이트", "axis": "SN", "value": "S" },
-        { "id": "6B", "label": "둘만의 대화와 상상이 길게 이어지는 데이트", "axis": "SN", "value": "N" },
-        { "id": "6C", "label": "기억에 남는 장소와 감각이 분명한 데이트", "axis": "SN", "value": "S" },
-        { "id": "6D", "label": "조금 낯설어도 서로의 세계를 넓혀주는 데이트", "axis": "SN", "value": "N" }
+        { "id": "6A", "label": "맛집, 동선, 분위기까지 꽉 찬 알짜 데이트", "axis": "SN", "value": "S" },
+        { "id": "6B", "label": "대화가 길게 이어지고 상상도 펼쳐지는 데이트", "axis": "SN", "value": "N" },
+        { "id": "6C", "label": "오감이 살아있고 기억에 선명하게 남는 데이트", "axis": "SN", "value": "S" },
+        { "id": "6D", "label": "낯선 것도 같이 부딪히며 서로 넓어지는 데이트", "axis": "SN", "value": "N" }
       ]
     },
     {
       "questionId": 7,
       "axis": "TF",
       "theme": "복잡한 얘기",
-      "prompt": "상대가 복잡한 얘기를 꺼냈을 때 너는?",
+      "prompt": "상대가 뭔가 복잡한 얘기를 꺼냈다. 나는?",
       "options": [
-        { "id": "7A", "label": "핵심 문제를 먼저 정리해본다", "axis": "TF", "value": "T" },
+        { "id": "7A", "label": "핵심이 뭔지 먼저 파악하려 한다", "axis": "TF", "value": "T" },
         { "id": "7B", "label": "지금 어떤 마음인지부터 살핀다", "axis": "TF", "value": "F" },
-        { "id": "7C", "label": "현실적인 선택지를 함께 생각한다", "axis": "TF", "value": "T" },
-        { "id": "7D", "label": "답보다 '혼자가 아니야'라는 느낌을 주고 싶다", "axis": "TF", "value": "F" }
+        { "id": "7C", "label": "같이 현실적인 선택지를 생각해본다", "axis": "TF", "value": "T" },
+        { "id": "7D", "label": "답보다 '나 여기 있어'라는 느낌을 주고 싶다", "axis": "TF", "value": "F" }
       ]
     },
     {
       "questionId": 8,
       "axis": "JP",
-      "theme": "전개",
-      "prompt": "마음이 생겼을 때 더 편한 전개는?",
+      "theme": "마음의 방향",
+      "prompt": "좋아하는 마음이 생겼을 때, 더 편한 흐름은?",
       "options": [
-        { "id": "8A", "label": "관계의 방향이 어느 정도 보여야 안심된다", "axis": "JP", "value": "J" },
-        { "id": "8B", "label": "정해두지 않아도 자연스럽게 깊어지면 좋다", "axis": "JP", "value": "P" },
-        { "id": "8C", "label": "다음 단계가 보일수록 솔직해진다", "axis": "JP", "value": "J" },
-        { "id": "8D", "label": "애매한 흐름 속에서도 여지가 느껴지면 괜찮다", "axis": "JP", "value": "P" }
+        { "id": "8A", "label": "이 관계가 어디로 가는지 어느 정도 보여야 안심된다", "axis": "JP", "value": "J" },
+        { "id": "8B", "label": "정해두지 않아도 자연스럽게 깊어지면 그걸로 충분하다", "axis": "JP", "value": "P" },
+        { "id": "8C", "label": "다음 단계가 보일수록 오히려 더 솔직해진다", "axis": "JP", "value": "J" },
+        { "id": "8D", "label": "애매해도 여지가 느껴지면 그걸로 괜찮다", "axis": "JP", "value": "P" }
       ]
     },
     {
       "questionId": 9,
       "axis": "EI",
       "theme": "데이트 후",
-      "prompt": "데이트를 마치고 집에 가는 길, 너는?",
+      "prompt": "좋은 데이트 끝내고 집에 가는 길, 나는?",
       "options": [
-        { "id": "9A", "label": "좋았던 장면을 바로 공유하고 싶다", "axis": "EI", "value": "E" },
-        { "id": "9B", "label": "여운을 혼자 천천히 곱씹고 싶다", "axis": "EI", "value": "I" },
-        { "id": "9C", "label": "집에 가는 길에도 대화가 이어지면 더 좋다", "axis": "EI", "value": "E" },
-        { "id": "9D", "label": "조용한 정리 시간이 있어야 만족스럽다", "axis": "EI", "value": "I" }
+        { "id": "9A", "label": "좋았던 장면 바로 캡처해서 공유하고 싶다", "axis": "EI", "value": "E" },
+        { "id": "9B", "label": "여운을 혼자 조용히 곱씹고 싶다", "axis": "EI", "value": "I" },
+        { "id": "9C", "label": "가는 길에도 대화가 이어지면 더 좋다", "axis": "EI", "value": "E" },
+        { "id": "9D", "label": "혼자 정리하는 시간이 있어야 진짜 만족스럽다", "axis": "EI", "value": "I" }
       ]
     },
     {
       "questionId": 10,
       "axis": "SN",
       "theme": "작은 변화",
-      "prompt": "상대가 평소와 다를 때 더 먼저 느끼는 건?",
+      "prompt": "상대가 오늘 좀 다른 것 같다. 내가 먼저 알아채는 건?",
       "options": [
-        { "id": "10A", "label": "표정·말투·메시지 간격 같은 눈에 보이는 변화", "axis": "SN", "value": "S" },
-        { "id": "10B", "label": "오늘 둘 사이 공기가 묘하게 달라진 느낌", "axis": "SN", "value": "N" },
-        { "id": "10C", "label": "평소 패턴에서 어긋난 작은 행동", "axis": "SN", "value": "S" },
-        { "id": "10D", "label": "설명은 안 돼도 결이 흔들리는 신호", "axis": "SN", "value": "N" }
+        { "id": "10A", "label": "표정, 말투, 답장 간격 같은 눈에 띄는 변화", "axis": "SN", "value": "S" },
+        { "id": "10B", "label": "오늘 분위기가 묘하게 달라진 느낌", "axis": "SN", "value": "N" },
+        { "id": "10C", "label": "평소 패턴에서 살짝 어긋난 행동", "axis": "SN", "value": "S" },
+        { "id": "10D", "label": "말로는 설명 못 해도 결이 흔들리는 신호", "axis": "SN", "value": "N" }
       ]
     },
     {
       "questionId": 11,
       "axis": "TF",
       "theme": "오래 가는 기준",
-      "prompt": "관계가 오래 가려면 더 중요하다고 느끼는 건?",
+      "prompt": "오래 가는 관계에서 더 중요하다고 느끼는 건?",
       "options": [
-        { "id": "11A", "label": "생활 리듬과 현실적인 기준이 잘 맞는 것", "axis": "TF", "value": "T" },
+        { "id": "11A", "label": "생활 리듬이랑 현실적인 기준이 잘 맞는 것", "axis": "TF", "value": "T" },
         { "id": "11B", "label": "서로의 감정을 세심하게 돌볼 수 있는 것", "axis": "TF", "value": "F" },
-        { "id": "11C", "label": "부딪힐 지점을 미리 보는 것", "axis": "TF", "value": "T" },
+        { "id": "11C", "label": "갈등이 생길 지점을 미리 알아채는 것", "axis": "TF", "value": "T" },
         { "id": "11D", "label": "결국 마음을 다루는 방식이 관계를 지킨다", "axis": "TF", "value": "F" }
       ]
     },
@@ -146,35 +146,35 @@
       "questionId": 12,
       "axis": "JP",
       "theme": "계획 변경",
-      "prompt": "데이트 당일 계획이 바뀌면 너는?",
+      "prompt": "데이트 당일에 갑자기 계획이 바뀌었다. 나는?",
       "options": [
-        { "id": "12A", "label": "흐름을 다시 정리해야 마음이 놓인다", "axis": "JP", "value": "J" },
-        { "id": "12B", "label": "그 상황에 맞게 분위기를 바꾸는 것도 좋다", "axis": "JP", "value": "P" },
-        { "id": "12C", "label": "예상 밖 변경은 다음 선택지를 빨리 세우게 만든다", "axis": "JP", "value": "J" },
-        { "id": "12D", "label": "뜻밖의 우회가 오히려 기억에 남기도 한다", "axis": "JP", "value": "P" }
+        { "id": "12A", "label": "일단 새 플랜부터 정리해야 마음이 놓인다", "axis": "JP", "value": "J" },
+        { "id": "12B", "label": "그 상황에 맞게 분위기 바꾸는 것도 나쁘지 않다", "axis": "JP", "value": "P" },
+        { "id": "12C", "label": "바뀌자마자 다음 선택지를 빠르게 세운다", "axis": "JP", "value": "J" },
+        { "id": "12D", "label": "뜻밖의 우회가 오히려 더 기억에 남기도 한다", "axis": "JP", "value": "P" }
       ]
     },
     {
       "questionId": 13,
       "axis": "EI",
       "theme": "가까워짐",
-      "prompt": "가까워질수록 더 자연스럽게 늘어나는 건?",
+      "prompt": "친해질수록 자연스럽게 늘어나는 건 어느 쪽?",
       "options": [
-        { "id": "13A", "label": "함께 하는 장면과 말의 양", "axis": "EI", "value": "E" },
-        { "id": "13B", "label": "조용한 순간에도 편안한 밀도", "axis": "EI", "value": "I" },
-        { "id": "13C", "label": "생각나는 순간 바로 공유하는 일", "axis": "EI", "value": "E" },
-        { "id": "13D", "label": "큰 표현보다 깊은 대화 한 번", "axis": "EI", "value": "I" }
+        { "id": "13A", "label": "같이 보내는 시간이랑 주고받는 말의 양", "axis": "EI", "value": "E" },
+        { "id": "13B", "label": "아무 말 없이도 편안한 그 분위기", "axis": "EI", "value": "I" },
+        { "id": "13C", "label": "생각날 때 바로 공유하는 습관", "axis": "EI", "value": "E" },
+        { "id": "13D", "label": "많은 대화보다 깊은 대화 한 번", "axis": "EI", "value": "I" }
       ]
     },
     {
       "questionId": 14,
       "axis": "SN",
       "theme": "초반 시선",
-      "prompt": "관계 초반에 더 중요하게 보는 건?",
+      "prompt": "관계 초반에 눈이 더 가는 건?",
       "options": [
-        { "id": "14A", "label": "지금 실제로 맞닿는 생활감과 템포", "axis": "SN", "value": "S" },
-        { "id": "14B", "label": "이 관계가 어디까지 이어질지의 그림", "axis": "SN", "value": "N" },
-        { "id": "14C", "label": "눈앞의 행동이 말과 자연스럽게 맞물리는지", "axis": "SN", "value": "S" },
+        { "id": "14A", "label": "지금 실제로 맞닿는 생활감이랑 속도감", "axis": "SN", "value": "S" },
+        { "id": "14B", "label": "이 관계가 어디까지 갈 수 있을지의 그림", "axis": "SN", "value": "N" },
+        { "id": "14C", "label": "하는 말이랑 행동이 자연스럽게 맞아떨어지는지", "axis": "SN", "value": "S" },
         { "id": "14D", "label": "아직 없는 장면까지 상상하게 만드는 여지", "axis": "SN", "value": "N" }
       ]
     },
@@ -182,72 +182,72 @@
       "questionId": 15,
       "axis": "TF",
       "theme": "엇갈림",
-      "prompt": "좋아하는 사람과 엇갈렸을 때 먼저 붙잡는 건?",
+      "prompt": "좋아하는 사람이랑 뭔가 어긋났다. 내가 먼저 붙잡는 건?",
       "options": [
-        { "id": "15A", "label": "왜 이런 차이가 생겼는지 원인을 본다", "axis": "TF", "value": "T" },
+        { "id": "15A", "label": "왜 이런 차이가 생겼는지 원인부터 본다", "axis": "TF", "value": "T" },
         { "id": "15B", "label": "서로 어떤 마음으로 받아들였는지부터 본다", "axis": "TF", "value": "F" },
-        { "id": "15C", "label": "감정이 커지기 전에 기준을 맞추고 싶다", "axis": "TF", "value": "T" },
-        { "id": "15D", "label": "결론보다 상처가 덜 남는 대화가 더 중요하다", "axis": "TF", "value": "F" }
+        { "id": "15C", "label": "감정이 커지기 전에 기준을 맞춰두고 싶다", "axis": "TF", "value": "T" },
+        { "id": "15D", "label": "결론보다 상처 덜 남는 대화가 더 중요하다", "axis": "TF", "value": "F" }
       ]
     },
     {
       "questionId": 16,
       "axis": "JP",
       "theme": "안정감",
-      "prompt": "관계에서 안정감을 느끼는 순간은?",
+      "prompt": "이 관계 안정적이다 싶을 때는 언제?",
       "options": [
-        { "id": "16A", "label": "약속과 기대가 분명하게 맞춰질 때", "axis": "JP", "value": "J" },
-        { "id": "16B", "label": "이름 붙이지 않아도 편하게 이어질 때", "axis": "JP", "value": "P" },
-        { "id": "16C", "label": "다음 흐름이 선명할수록 더 마음을 연다", "axis": "JP", "value": "J" },
-        { "id": "16D", "label": "즉흥이 있어도 함께 받아낼 여유가 있을 때", "axis": "JP", "value": "P" }
+        { "id": "16A", "label": "약속이랑 기대가 서로 딱 맞춰질 때", "axis": "JP", "value": "J" },
+        { "id": "16B", "label": "이름 안 붙여도 그냥 편하게 이어질 때", "axis": "JP", "value": "P" },
+        { "id": "16C", "label": "다음 흐름이 선명할수록 더 마음이 열린다", "axis": "JP", "value": "J" },
+        { "id": "16D", "label": "즉흥이 생겨도 같이 받아낼 여유가 있을 때", "axis": "JP", "value": "P" }
       ]
     },
     {
       "questionId": 17,
       "axis": "EI",
       "theme": "설렘",
-      "prompt": "심장이 오래 남는 설렘은 어느 쪽에 더 가깝나?",
+      "prompt": "심장에 오래 남는 설렘이라면?",
       "options": [
-        { "id": "17A", "label": "사람들 사이에서도 둘의 텐션이 살아나는 순간", "axis": "EI", "value": "E" },
-        { "id": "17B", "label": "조용한 공간에서 시선과 말이 천천히 맞닿는 순간", "axis": "EI", "value": "I" },
+        { "id": "17A", "label": "사람들 사이에서도 둘만의 텐션이 살아있는 순간", "axis": "EI", "value": "E" },
+        { "id": "17B", "label": "조용한 공간에서 시선이랑 말이 천천히 맞닿는 순간", "axis": "EI", "value": "I" },
         { "id": "17C", "label": "반응이 오가는 속도 속에서 관계가 커지는 순간", "axis": "EI", "value": "E" },
-        { "id": "17D", "label": "말보다 공기에서 마음이 전해지는 순간", "axis": "EI", "value": "I" }
+        { "id": "17D", "label": "말 없이도 공기에서 마음이 전해지는 순간", "axis": "EI", "value": "I" }
       ]
     },
     {
       "questionId": 18,
       "axis": "SN",
       "theme": "깊은 대화",
-      "prompt": "오래 얘기하게 되는 주제는 보통 어느 쪽인가?",
+      "prompt": "둘이서 오래 얘기하게 되는 주제는 보통?",
       "options": [
-        { "id": "18A", "label": "취향, 생활, 최근 있었던 실제 이야기", "axis": "SN", "value": "S" },
-        { "id": "18B", "label": "미래, 관계의 방향, 아직 오지 않은 장면", "axis": "SN", "value": "N" },
-        { "id": "18C", "label": "함께 겪은 순간의 구체적인 감각과 기억", "axis": "SN", "value": "S" },
-        { "id": "18D", "label": "둘 사이에서 생길 수 있는 의미와 가능성", "axis": "SN", "value": "N" }
+        { "id": "18A", "label": "취향, 일상, 최근에 있었던 실제 이야기", "axis": "SN", "value": "S" },
+        { "id": "18B", "label": "미래, 관계의 방향, 아직 오지 않은 장면들", "axis": "SN", "value": "N" },
+        { "id": "18C", "label": "같이 겪었던 순간의 구체적인 감각이랑 기억", "axis": "SN", "value": "S" },
+        { "id": "18D", "label": "이 관계에서 생길 수 있는 가능성이랑 의미", "axis": "SN", "value": "N" }
       ]
     },
     {
       "questionId": 19,
       "axis": "TF",
       "theme": "깊은 끌림",
-      "prompt": "사람에게 깊이 끌리는 이유로 더 가까운 건?",
+      "prompt": "사람한테 깊이 끌릴 때, 더 가까운 이유는?",
       "options": [
-        { "id": "19A", "label": "기준이 분명하고 판단이 안정적인 모습", "axis": "TF", "value": "T" },
-        { "id": "19B", "label": "사람을 다루는 온도가 다정한 모습", "axis": "TF", "value": "F" },
-        { "id": "19C", "label": "감정보다 관계를 지탱할 힘이 보이는 모습", "axis": "TF", "value": "T" },
-        { "id": "19D", "label": "작은 감정도 놓치지 않고 살피는 모습", "axis": "TF", "value": "F" }
+        { "id": "19A", "label": "기준이 뚜렷하고 판단이 흔들리지 않는 모습", "axis": "TF", "value": "T" },
+        { "id": "19B", "label": "사람을 대하는 온도가 다정한 모습", "axis": "TF", "value": "F" },
+        { "id": "19C", "label": "감정보다 관계를 지탱할 힘이 느껴지는 모습", "axis": "TF", "value": "T" },
+        { "id": "19D", "label": "작은 감정도 그냥 지나치지 않는 모습", "axis": "TF", "value": "F" }
       ]
     },
     {
       "questionId": 20,
       "axis": "JP",
       "theme": "무르익는 순간",
-      "prompt": "관계가 무르익는다고 느끼는 장면은?",
+      "prompt": "아 이 관계 진짜 깊어졌다 싶은 순간은?",
       "options": [
-        { "id": "20A", "label": "서로의 마음과 다음 단계가 또렷해질 때", "axis": "JP", "value": "J" },
-        { "id": "20B", "label": "정의하지 않아도 자연스럽게 가까워질 때", "axis": "JP", "value": "P" },
-        { "id": "20C", "label": "애매함보다 약속이 늘어날 때 관계가 선명해진다", "axis": "JP", "value": "J" },
-        { "id": "20D", "label": "예상하지 못한 순간에도 리듬이 이어질 때 깊어진다", "axis": "JP", "value": "P" }
+        { "id": "20A", "label": "서로의 마음이랑 다음 단계가 또렷해질 때", "axis": "JP", "value": "J" },
+        { "id": "20B", "label": "따로 정의 안 해도 자연스럽게 가까워질 때", "axis": "JP", "value": "P" },
+        { "id": "20C", "label": "애매함보다 약속이 늘어날수록 관계가 선명해진다", "axis": "JP", "value": "J" },
+        { "id": "20D", "label": "예상 못 한 순간에도 리듬이 끊기지 않을 때", "axis": "JP", "value": "P" }
       ]
     }
   ]
