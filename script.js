@@ -12,7 +12,7 @@
   var STORAGE_SUMMARY_KEY = "result_summary";
   var STORAGE_DETAIL_KEY = "result_detail";
   var STORAGE_NEXT_AVAILABLE_KEY = "next_available_at";
-  var APP_VERSION = "1.2.2";
+  var APP_VERSION = "1.2.3";
   var DAILY_LIMIT = 3;
 
   var HIGH_CONTRAST = "hc";
