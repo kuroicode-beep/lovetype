@@ -721,6 +721,17 @@
     ].join("");
   }
 
+  function renderCompatibility(data, loading, result) {
+    document.getElementById("compat-best-type").textContent = data.best.type;
+    document.getElementById("compat-best-reason").textContent = data.best.reason;
+    document.getElementById("compat-unexpected-type").textContent = data.unexpected.type;
+    document.getElementById("compat-unexpected-reason").textContent = data.unexpected.reason;
+    document.getElementById("compat-caution-type").textContent = data.caution.type;
+    document.getElementById("compat-caution-reason").textContent = data.caution.reason;
+    loading.hidden = true;
+    result.hidden = false;
+  }
+
   function loadCompatibility(mbti, axisStrength) {
     var section = document.querySelector(".compatibility-section");
     var loading = document.getElementById("compatibility-loading");
@@ -731,6 +742,18 @@
     }
 
     section.hidden = false;
+
+    var cacheKey = "compat_cache_" + mbti;
+    var cached = window.localStorage.getItem(cacheKey);
+
+    if (cached) {
+      try {
+        renderCompatibility(JSON.parse(cached), loading, result);
+        return;
+      } catch (e) {
+        window.localStorage.removeItem(cacheKey);
+      }
+    }
 
     var axisStrengthFlat = {
       EI: axisStrength.EI.winner + "_" + axisStrength.EI.level,
@@ -755,14 +778,8 @@
         return res.json();
       })
       .then(function (data) {
-        document.getElementById("compat-best-type").textContent = data.best.type;
-        document.getElementById("compat-best-reason").textContent = data.best.reason;
-        document.getElementById("compat-unexpected-type").textContent = data.unexpected.type;
-        document.getElementById("compat-unexpected-reason").textContent = data.unexpected.reason;
-        document.getElementById("compat-caution-type").textContent = data.caution.type;
-        document.getElementById("compat-caution-reason").textContent = data.caution.reason;
-        loading.hidden = true;
-        result.hidden = false;
+        window.localStorage.setItem(cacheKey, JSON.stringify(data));
+        renderCompatibility(data, loading, result);
       })
       .catch(function (e) {
         loading.textContent = "AI 분석을 불러오지 못했어요.";
@@ -790,6 +807,12 @@
   }
 
   function saveResultToAPI(payload) {
+    var todayKST = new Date().toLocaleDateString("ko-KR", { timeZone: "Asia/Seoul" });
+    var savedDate = window.localStorage.getItem("api_result_saved_date");
+    if (savedDate === todayKST) {
+      return;
+    }
+
     var axisStrengthFlat = {
       EI: payload.axis_strength.EI.winner + "_" + payload.axis_strength.EI.level,
       SN: payload.axis_strength.SN.winner + "_" + payload.axis_strength.SN.level,
@@ -808,6 +831,10 @@
         axis_strength: axisStrengthFlat,
         result_data: payload.result
       })
+    }).then(function (res) {
+      if (res.ok) {
+        window.localStorage.setItem("api_result_saved_date", todayKST);
+      }
     }).catch(function (e) {
       console.warn("[API] result 저장 실패 (로컬 계속):", e.message);
     });
