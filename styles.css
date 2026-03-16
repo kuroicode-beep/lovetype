@@ -511,6 +511,13 @@ h3 {
   font-weight: 700;
 }
 
+/* 문항 화면 — 축 코드/이름, 테마, 안내 문구 숨김 */
+.question-kicker,
+.question-theme,
+.question-help {
+  display: none;
+}
+
 .choice-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
