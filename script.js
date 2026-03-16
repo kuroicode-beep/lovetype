@@ -12,7 +12,7 @@
   var STORAGE_SUMMARY_KEY = "result_summary";
   var STORAGE_DETAIL_KEY = "result_detail";
   var STORAGE_NEXT_AVAILABLE_KEY = "next_available_at";
-  var APP_VERSION = "1.2.3";
+  var APP_VERSION = "1.2.4";
   var DAILY_LIMIT = 3;
 
   var HIGH_CONTRAST = "hc";
@@ -958,14 +958,18 @@
   }
 
   function showHeaderShareBtn() {
-    if (elements.headerShareBtn) {
-      elements.headerShareBtn.hidden = false;
+    var btn = document.getElementById("header-share-btn");
+    if (btn) {
+      btn.removeAttribute("hidden");
+      btn.style.display = "inline-flex";
     }
   }
 
   function hideHeaderShareBtn() {
-    if (elements.headerShareBtn) {
-      elements.headerShareBtn.hidden = true;
+    var btn = document.getElementById("header-share-btn");
+    if (btn) {
+      btn.hidden = true;
+      btn.style.display = "";
     }
   }
 
