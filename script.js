@@ -793,6 +793,75 @@
       });
   }
 
+  function generateResultCode(mbti, axisStrength) {
+    function strengthToNum(strengthStr) {
+      if (!strengthStr) {
+        return 2;
+      }
+      if (strengthStr.indexOf("strong") !== -1) {
+        return strengthStr.indexOf("5") !== -1 ? 5 : 4;
+      }
+      return 2;
+    }
+
+    var eiStr = axisStrength.EI ? axisStrength.EI.winner + "_" + axisStrength.EI.level : "";
+    var snStr = axisStrength.SN ? axisStrength.SN.winner + "_" + axisStrength.SN.level : "";
+    var tfStr = axisStrength.TF ? axisStrength.TF.winner + "_" + axisStrength.TF.level : "";
+    var jpStr = axisStrength.JP ? axisStrength.JP.winner + "_" + axisStrength.JP.level : "";
+
+    return (
+      mbti[0] + strengthToNum(eiStr) +
+      mbti[1] + strengthToNum(snStr) +
+      mbti[2] + strengthToNum(tfStr) +
+      mbti[3] + strengthToNum(jpStr)
+    );
+  }
+
+  function showCopyToast(msg) {
+    var existing = document.querySelector(".copy-toast");
+    if (existing) {
+      existing.remove();
+    }
+    var toast = document.createElement("div");
+    toast.className = "copy-toast";
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(function () {
+      toast.remove();
+    }, 2500);
+  }
+
+  function copyResultCode(code) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(function () {
+        showCopyToast("코드가 복사됐어요 🩷 타로앱에 붙여넣기 해보세요!");
+      }).catch(function () {
+        showCopyToast("코드가 복사됐어요 🩷");
+      });
+      return;
+    }
+    var el = document.createElement("textarea");
+    el.value = code;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    showCopyToast("코드가 복사됐어요 🩷");
+  }
+
+  function renderResultCode(code) {
+    var el = document.getElementById("result-code-display");
+    if (el) {
+      el.textContent = code;
+    }
+    var btn = document.getElementById("result-code-copy-btn");
+    if (btn) {
+      btn.onclick = function () {
+        copyResultCode(code);
+      };
+    }
+  }
+
   function renderResult(payload, isLocked) {
     state.resultPayload = payload;
     showScreen("result");
@@ -809,6 +878,7 @@
     elements.storyLink.setAttribute("href", "#");
     renderLineGraph(payload);
     showHeaderShareBtn();
+    renderResultCode(generateResultCode(payload.mbti, payload.axis_strength));
     loadCompatibility(payload.mbti, payload.axis_strength);
   }
 

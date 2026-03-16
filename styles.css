@@ -700,6 +700,84 @@ h3 {
   line-height: 1.8;
 }
 
+/* 결과 코드 복사 영역 */
+.result-code-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.4rem 0.85rem;
+  background: var(--surface-muted);
+  border-radius: 0.6rem;
+  border: 1.5px dashed var(--pink);
+}
+
+.result-code-label {
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+
+.result-code-text {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pink);
+  letter-spacing: 0.1em;
+}
+
+.result-code-copy-btn {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--pink);
+  background: transparent;
+  color: var(--pink);
+  cursor: pointer;
+  min-height: 2rem;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.result-code-copy-btn:hover,
+.result-code-copy-btn:focus-visible {
+  background: var(--pink);
+  color: #fff;
+}
+
+[data-theme="hc"] .result-code-wrap {
+  border-color: var(--pink);
+  background: var(--surface-muted);
+}
+
+[data-theme="hc"] .result-code-text {
+  color: var(--pink);
+}
+
+/* 복사 토스트 */
+.copy-toast {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: rgba(44, 33, 42, 0.92);
+  color: #fff;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  z-index: 9999;
+  pointer-events: none;
+  animation: copyToastFade 2.5s ease forwards;
+}
+
+@keyframes copyToastFade {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  15%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* AI 궁합 섹션 */
 .compatibility-section #compatibility-loading {
   font-size: 1rem;
