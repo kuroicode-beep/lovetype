@@ -1081,6 +1081,8 @@
       });
   }
 
+  window.showHeaderShareBtn = showHeaderShareBtn;
+  window.hideHeaderShareBtn = hideHeaderShareBtn;
   initializeTheme();
   initializeEvents();
   initializeApp();
